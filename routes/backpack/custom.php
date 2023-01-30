@@ -20,4 +20,5 @@ Route::group([
     Route::post('page/store', ['as' => 'admin.page.store', 'uses' => 'PageCrudController@store']);
     Route::post('page/{id}/update', ['as' => 'admin.page.update', 'uses' => 'PageCrudController@update']);
     Route::crud('category', 'CategoryCrudController');
+    Route::crud('funded', 'FundedCrudController');
 }); // this should be the absolute last line of this file
