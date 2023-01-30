@@ -1,0 +1,126 @@
+
+[contenteditable]:focus,
+[contenteditable]:hover {
+  outline: 2mm solid #daedf0;
+  background: #daedf0;
+}
+.letter_class {
+  position: relative;
+  display: block;
+  background: #efefef;
+  width: 210mm;
+  height: 300mm;
+  padding: 20mm;
+  margin: 0 auto;
+}
+.letter_class:before,
+.letter_class:after {
+  position: absolute;
+  content: "";
+  left: 0;
+  width: 5mm;
+  height: 0;
+  border-bottom: 1px solid #ccc;
+}
+.letter_class:before {
+  top: 105mm;
+}
+.letter_class:after {
+  top: 300mm;
+}
+.address_class {
+  font-style: normal;  
+}
+
+.header_class {
+  position: absolute;
+  top: 30mm;
+}
+.main_class {
+  position: absolute;
+  top: 70mm;
+  left: 20mm;
+  right: 20mm;
+}
+.subject_class {
+  display: block;
+  margin-bottom: 28pt;
+  margin-right: 40mm;
+  font-weight: 600;
+}
+
+.text_class {
+  display: block;
+  margin-bottom: 20pt;
+
+  
+}
+.two  {
+  margin-bottom: 14pt;
+}
+.signature_class  {
+  display: block;
+  padding-top: 40pt;
+
+}
+
+selectiontools {
+  padding:0;
+  opacity: 0;
+  margin-left: -9999px;
+  background-color:#222;
+  margin-top: -10px;
+  transition: opacity 180ms 0s ease, margin-top 180ms 0s ease, margin-left 0s 180ms ease;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  z-index:1000;
+}
+
+selectiontools.active {
+  opacity: 1;
+  margin-left: 4px;
+  margin-top: 0;
+  transition: opacity 240ms 100ms ease;
+}
+
+selectiontools:before {
+  position:absolute;
+  left:-7px;
+  top:32px;
+  content: '';
+  width:0;
+  height:0;
+  border:7px solid transparent;
+  border-left-color:#222;
+  z-index: 10;
+  transform: rotate(-135deg);
+}
+
+selectiontools button {
+  font-size:150%;
+  width:40px;
+  height:40px;
+  line-height: 39px;
+  cursor:pointer;
+  color: white;
+  background: transparent;
+  border:none;
+  z-index: 100;
+  float:left;
+}
+
+selectiontools button * {
+  font: inherit;
+}
+
+selectiontools button em {
+  font-style: italic;
+  font-weight: normal;
+}
+
+selectiontools button strong {
+  font-weight: bold;
+}
+
+selectiontools button:hover {
+  background-color:#708090;
+}

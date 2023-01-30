@@ -1,0 +1,112 @@
+
+.vacancy-block-wrapper {
+	border: 1px solid rgba(0,40,100,.12);
+	padding: 10px;
+	width: auto;
+	border-radius: 5px;
+}
+.bg-light-sky {
+	background-color: rgba(52, 211, 235, 0.2);
+	border: 1px solid #34d3eb;
+	color: #34d3eb !important;
+}
+.text-light-sky {
+	color: #34d3eb !important;
+}
+.bg-light-pink {
+	background-color: rgba(251, 109, 157, 0.2);
+	border: 1px solid #fb6d9d;
+	color: #fb6d9d;
+}
+.text-light-pink {
+	color: #fb6d9d !important;
+}
+
+.bg-light-violet {
+	background-color: rgba(114, 102, 186, 0.2);
+	border: 1px solid #7266ba;
+	color: #7266ba;
+}
+.text-light-violet {
+	color: #7266ba !important;
+}
+.bg-light-green {
+	background-color: rgba(129, 200, 104, 0.2);
+	border: 1px solid #81c868;
+	color: #81c868;
+}
+.text-light-green {
+	color: #81c868 !important;
+}
+.bg-light-blue {
+	background-color: #0044cc1c !important;
+	border: 1px solid #0044cc94;
+	color: #0044ccad;
+}
+.text-light-blue {
+	color: #0044ccad !important;
+}
+.bg-light-orange {
+	background-color: #f16a4317;
+	border: 1px solid #f16a43e8;
+	color: #f16a43d9;
+}
+.text-light-orange {
+	color: #f16a43e8 !important;
+}
+.border-radius-5 {
+	border-radius: 30px !important;
+}
+.error {
+	color: red;
+	font-size: 0.8em;
+}
+.search-history-container {
+    display:none;
+	color:green;
+	overflow: auto;
+	height: 240px;
+	text-align:justify;
+	margin-bottom: 40px;
+	margin-left: 15px;
+	border: 1px solid #ccc;
+	position: absolute;
+    bottom: 0;
+	left: 0;
+	background-color: #fff;
+	padding: 15px 5px;
+	border-radius: 3px;
+}
+.search-history-container ul li a:hover{
+	color: #7266ba !important;
+}
+.select2-container--default .select2-selection--multiple {
+	border: 1px solid #E8E8E8 !important;
+}
+
+#bp-filters-navbar .navbar-nav .nav-link {
+    color: #1b2a4e;
+}
+.star:after{
+    content: "*";
+    color: red;
+    display: inline-block;
+}
+
+.import-area{
+    border: 1px solid lightgray;
+    border-radius: 5px;
+}
+
+#QueryBody{
+    font-style: italic;
+    padding: 20px;
+    text-align: center;
+}
+
+#QueryComments {
+    background-color: white;
+    box-shadow: 5px 5px 2px lightgrey;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
