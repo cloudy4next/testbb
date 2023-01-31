@@ -24,14 +24,14 @@ return [
     // ----
 
     // Project name. Shown in the window title.
-    'project_name' => 'Backpack Admin Panel',
+    'project_name' => 'Knowledge Hub Portal',
 
     // When clicking on the admin panel's top-left logo/name,
     // where should the user be redirected?
     // The string below will be passed through the url() helper.
     // - default: '' (project root)
     // - alternative: 'admin' (the admin's dashboard)
-    'home_link' => '',
+    'home_link' => 'admin',
 
     // Content of the HTML meta robots tag to prevent indexing and link following
     'meta_robots_content' => 'noindex, nofollow',
@@ -42,8 +42,7 @@ return [
 
     // CSS files that are loaded in all pages, using Laravel's asset() helper
     'styles' => [
-        'packages/backpack/base/css/bundle.css', // has primary color electric purple (backpack default)
-        // 'packages/backpack/base/css/blue-bundle.css', // has primary color blue
+        'packages/backpack/base/css/bundle.css',
 
         // Here's what's inside the bundle:
         // 'packages/@digitallyhappy/backstrap/css/style.min.css',
@@ -72,13 +71,13 @@ return [
     // ------
 
     // Menu logo. You can replace this with an <img> tag if you have a logo.
-    'project_logo'   => '<b>Back</b>pack',
+    'project_logo'   => '<b>Knowledge Hub</b> Portal',
 
     // Show / hide breadcrumbs on admin panel pages.
     'breadcrumbs' => true,
 
     // Horizontal navbar classes. Helps make the admin panel look similar to your project's design.
-    'header_class' => 'app-header bg-light border-0 navbar',
+    'header_class' => 'app-header border-0 navbar bg-dark',
     // For background colors use: bg-dark, bg-primary, bg-secondary, bg-danger, bg-warning, bg-success, bg-info, bg-blue, bg-light-blue, bg-indigo, bg-purple, bg-pink, bg-red, bg-orange, bg-yellow, bg-green, bg-teal, bg-cyan, bg-white
     // For links to be visible on different background colors use: "navbar-dark", "navbar-light", "navbar-color"
 
@@ -91,7 +90,7 @@ return [
     // Try sidebar-hidden, sidebar-fixed, sidebar-compact, sidebar-lg-show
 
     // Sidebar element classes.
-    'sidebar_class' => 'sidebar sidebar-pills bg-light',
+    'sidebar_class' => 'sidebar sidebar-pills bg-dark',
     // Remove "sidebar-transparent" for standard sidebar look
     // Try "sidebar-light" or "sidebar-dark" for dark/light links
     // You can also add a background class like bg-dark, bg-primary, bg-secondary, bg-danger, bg-warning, bg-success, bg-info, bg-blue, bg-light-blue, bg-indigo, bg-purple, bg-pink, bg-red, bg-orange, bg-yellow, bg-green, bg-teal, bg-cyan
@@ -101,18 +100,18 @@ return [
     // ------
 
     // Footer element classes.
-    'footer_class' => 'app-footer d-print-none',
+    'footer_class' => 'app-footer d-none bg-light',
     // hide it with d-none
     // change background color with bg-dark, bg-primary, bg-secondary, bg-danger, bg-warning, bg-success, bg-info, bg-blue, bg-light-blue, bg-indigo, bg-purple, bg-pink, bg-red, bg-orange, bg-yellow, bg-green, bg-teal, bg-cyan, bg-white
 
     // Developer or company name. Shown in footer.
-    'developer_name' => 'Cristian Tabacitu',
+    'developer_name' => '',
 
     // Developer website. Link in footer. Type false if you want to hide it.
-    'developer_link' => 'http://tabacitu.ro',
+    'developer_link' => '',
 
     // Show powered by Laravel Backpack in the footer? true/false
-    'show_powered_by' => true,
+    'show_powered_by' => false,
 
     // -------
     // SCRIPTS
@@ -194,6 +193,10 @@ return [
     // Warning: if you disable this, the password recovery routes (below) will be disabled too!
     'setup_auth_routes' => true,
 
+    // Set this to false if you would like to skip adding the password recovery routes
+    // (you then need to manually define the routes in your web.php)
+    'setup_password_recovery_routes' => true,
+
     // Set this to false if you would like to skip adding the dashboard routes
     // (you then need to overwrite the login route on your AuthController)
     'setup_dashboard_routes' => true,
@@ -201,32 +204,6 @@ return [
     // Set this to false if you would like to skip adding "my account" routes
     // (you then need to manually define the routes in your web.php)
     'setup_my_account_routes' => true,
-
-    // Set this to false if you would like to skip adding the password recovery routes
-    // (you then need to manually define the routes in your web.php)
-    'setup_password_recovery_routes' => true,
-
-    /*
-    |--------------------------------------------------------------------------
-    | Security
-    |--------------------------------------------------------------------------
-    */
-
-    // Backpack will prevent visitors from requesting password recovery too many times
-    // for a certain email, to make sure they cannot be spammed that way.
-    // How many seconds should a visitor wait, after they've requested a
-    // password reset, before they can try again for the same email?
-    'password_recovery_throttle_notifications' => 600, // time in seconds
-
-    // Backpack will prevent an IP from trying to reset the password too many times,
-    // so that a malicious actor cannot try too many emails, too see if they have
-    // accounts or to increase the AWS/SendGrid/etc bill.
-    //
-    // How many times in any given time period should the user be allowed to
-    // attempt a password reset? Take into account that user might wrongly
-    // type an email at first, so at least allow one more try.
-    // Defaults to 3,10 - 3 times in 10 minutes.
-    'password_recovery_throttle_access' => '3,10',
 
     /*
     |--------------------------------------------------------------------------
@@ -244,7 +221,7 @@ return [
     'middleware_class' => [
         App\Http\Middleware\CheckIfAdmin::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
-        // \Backpack\CRUD\app\Http\Middleware\UseBackpackAuthGuardInsteadOfDefaultAuthGuard::class,
+        //\Backpack\CRUD\app\Http\Middleware\UseBackpackAuthGuardInsteadOfDefaultAuthGuard::class,
     ],
 
     // Alias for that middleware
@@ -259,17 +236,18 @@ return [
 
     // The guard that protects the Backpack admin panel.
     // If null, the config.auth.defaults.guard value will be used.
-    'guard' => 'backpack',
+    'guard' => null,
 
     // The password reset configuration for Backpack.
     // If null, the config.auth.defaults.passwords value will be used.
     'passwords' => 'backpack',
 
     // What kind of avatar will you like to show to the user?
-    // Default: gravatar (automatically use the gravatar for their email)
+    // Default: gravatar (automatically use the gravatar for his email)
     // Other options:
-    // - placehold (generic image with their first letter)
+    // - placehold (generic image with his first letter)
     // - example_method_name (specify the method on the User model that returns the URL)
+    //'avatar_type' => 'placehold',
     'avatar_type' => 'gravatar',
 
     /*

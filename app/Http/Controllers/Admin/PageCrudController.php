@@ -29,7 +29,7 @@ class PageCrudController extends CrudController
     use ShowOperation;
     use UpdateOperation;
     use DeleteOperation;
-
+    use \Backpack\CRUD\app\Http\Controllers\Operations\BulkDeleteOperation;
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
      *
@@ -40,6 +40,7 @@ class PageCrudController extends CrudController
         CRUD::setModel(\App\Models\Page::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/page');
         CRUD::setEntityNameStrings('page', 'pages');
+
     }
 
     /**
@@ -50,6 +51,23 @@ class PageCrudController extends CrudController
      */
     protected function setupListOperation()
     {
+        $this->crud->denyAccess(['show','create', ]);
+
+        $this->crud->enableExportButtons();
+
+        if(backpack_user()->hasPermissionTo('Page store')) {
+            $this->crud->allowAccess(['create']);
+        }
+
+        if(!(backpack_user()->hasPermissionTo('Page delete'))) {
+            $this->crud->denyAccess(['delete']);
+        }
+
+        if(!(backpack_user()->hasPermissionTo('Page edit'))) {
+        $this->crud->denyAccess(['update']);
+        }
+
+
 
         $this->crud->addColumn([
             'name' => 'row_number',
@@ -59,71 +77,50 @@ class PageCrudController extends CrudController
         ])->makeFirstColumn();
 
         CRUD::column('title');
-        // CRUD::column('user_id');
+
         $this->crud->addColumn([
             'name' => 'user_id',
             'label' => 'Publish By',
         ]);
-        // CRUD::column('created_at');
+
         $this->crud->addColumn([
             'name' => 'created_at',
             'label' => 'Date',
         ]);
 
-        /**
-         * Columns can be defined using the fluent syntax or array syntax:
-         * - CRUD::column('price')->type('number');
-         * - CRUD::addColumn(['name' => 'price', 'type' => 'number']);
-         */
     }
-
-    /**
-     * Define what happens when the Create operation is loaded.
-     *
-     * @see https://backpackforlaravel.com/docs/crud-operation-create
-     * @return void
-     */
-
-    /**
-     * Define what happens when the Update operation is loaded.
-     *
-     * @see https://backpackforlaravel.com/docs/crud-operation-update
-     * @return void
-     */
-    // protected function setupUpdateOperation()
-    // {
-    //     $this->setupCreateOperation();
-    // }
 
     public function create()
     {
         $category = Category::pluck('name', 'id');
-        // dd($category);
+
         return view('admin.page.create')
             ->withcategory($category);
     }
 
     public function store(PageRequest $request)
     {
-        $attachments = $request->image;
-        $destinationPath = public_path() . "/uploads/page";
-        $name = $attachments->getClientOriginalName();
-        $fileName = time() . '_' . $name;
-        $fileName = preg_replace('/\s+/', '_', $fileName);
-        $attachments->move($destinationPath, $fileName);
+                // dd($request->all());
 
+        $attachments = $request->image;
+        if($attachments != NULL){
+            $destinationPath = public_path() . "/uploads/page";
+            $name = $attachments->getClientOriginalName();
+            $fileName = time() . '_' . $name;
+            $fileName = preg_replace('/\s+/', '_', $fileName);
+            $attachments->move($destinationPath, $fileName);
+        }
         $page = new page();
         $page->title = $request['title'];
         $page->description = $request['description'];
         $page->status = $request['status'];
-        $page->category_id = $request['category'];
+        $page->category_id = $request['category_id'];
         $page->user_id = backpack_user()->id;
         $page->created_at = Carbon::now();
         $page->image = $fileName ?? NULL;
         $page->save();
 
         \Alert::success('page successfully created!')->flash();
-
 
         return redirect('admin/page');
     }
@@ -132,7 +129,6 @@ class PageCrudController extends CrudController
     {
         $category = Category::pluck('name', 'id');
         $data = Page::where('id', '=', $id)->first();
-
 
         return view('admin.page.edit')
             ->withcategory($category)
@@ -146,18 +142,20 @@ class PageCrudController extends CrudController
         if (File::exists(public_path('uploads/page/' . $data->image))) {
             File::delete(public_path('uploads/page/' . $data->image));
         }
-        $attachments = $request->image;
-        $destinationPath = public_path() . "/uploads/page";
-        $name = $attachments->getClientOriginalName();
-        $fileName = time() . '_' . $name;
-        $fileName = preg_replace('/\s+/', '_', $fileName);
-        $attachments->move($destinationPath, $fileName);
 
+        $attachments = $request->image;
+        if($attachments != NULL){
+            $destinationPath = public_path() . "/uploads/page";
+            $name = $attachments->getClientOriginalName();
+            $fileName = time() . '_' . $name;
+            $fileName = preg_replace('/\s+/', '_', $fileName);
+            $attachments->move($destinationPath, $fileName);
+        }
         $page = page::find($id);
         $page->title = $request['title'];
         $page->description = $request['description'];
         $page->status = $request['status'];
-        $page->category_id = $request['category'];
+        $page->category_id = $request['category_id'];
         $page->user_id = backpack_user()->id;
         $page->created_at = Carbon::now();
         $page->image = $fileName ?? NULL;
@@ -168,4 +166,5 @@ class PageCrudController extends CrudController
 
         return redirect()->back()->withInput();
     }
+
 }

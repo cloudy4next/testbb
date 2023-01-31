@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PageRequest extends FormRequest
+class NoticeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -29,7 +29,7 @@ class PageRequest extends FormRequest
             'description' => 'required|min:5',
             'status' => 'required',
             'image' => 'mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ];
+            ];
     }
 
     /**

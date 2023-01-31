@@ -9,10 +9,20 @@ class Funded extends Model
 {
     use \Backpack\CRUD\app\Models\Traits\CrudTrait;
     use HasFactory;
-    protected $fillable = ['name',];
+    protected $fillable = ['name'];
 
     public function projects()
     {
-        return $this->hasMany('App\Models\Page');
+        return $this->hasMany('App\Models\Project');
+    }
+
+    public function news()
+    {
+        return $this->hasMany('App\Models\News');
+    }
+
+    public function notices()
+    {
+        return $this->hasMany('App\Models\Notice');
     }
 }
