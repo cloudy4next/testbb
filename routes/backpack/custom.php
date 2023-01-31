@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\ActivityController;
 
 // --------------------------
 // Custom Backpack Routes
@@ -25,18 +26,33 @@ Route::group([
         Route::post('page/{id}/update', ['as' => 'admin.page.update', 'uses' => 'PageCrudController@update']);
 
     });
-    Route::crud('category', 'CategoryCrudController');
-    Route::crud('funded', 'FundedCrudController');
-    Route::crud('project', 'ProjectCrudController');
+    Route::group(['middleware' => 'acl:Page'], function () {
+        Route::crud('category', 'CategoryCrudController');
+        Route::crud('funded', 'FundedCrudController');
+    });
 
-    Route::post('project/store', ['as' => 'admin.project.store', 'uses' => 'ProjectCrudController@store']);
-    Route::post('project/{id}/update', ['as' => 'admin.project.update', 'uses' => 'ProjectCrudController@update']);
+    Route::group(['middleware' => 'acl:Page'], function () {
+        Route::crud('project', 'ProjectCrudController');
+        Route::post('project/store', ['as' => 'admin.project.store', 'uses' => 'ProjectCrudController@store']);
+        Route::post('project/{id}/update', ['as' => 'admin.project.update', 'uses' => 'ProjectCrudController@update']);
+    });
+    Route::group(['middleware' => 'acl:Page'], function () {
+        Route::crud('news', 'NewsCrudController');
+        Route::post('news/store', ['as' => 'admin.news.store', 'uses' => 'NewsCrudController@store']);
+        Route::post('news/{id}/update', ['as' => 'admin.news.update', 'uses' => 'NewsCrudController@update']);
+    });
+    Route::group(['middleware' => 'acl:Page'], function () {
 
-    Route::crud('news', 'NewsCrudController');
-    Route::post('news/store', ['as' => 'admin.news.store', 'uses' => 'NewsCrudController@store']);
-    Route::post('news/{id}/update', ['as' => 'admin.news.update', 'uses' => 'NewsCrudController@update']);
+        Route::crud('notice', 'NoticeCrudController');
+        Route::post('notice/store', ['as' => 'admin.notice.store', 'uses' => 'NoticeCrudController@store']);
+        Route::post('notice/{id}/update', ['as' => 'admin.notice.update', 'uses' => 'NoticeCrudController@update']);
+    });
 
-    Route::crud('notice', 'NoticeCrudController');
-    Route::post('notice/store', ['as' => 'admin.notice.store', 'uses' => 'NoticeCrudController@store']);
-    Route::post('notice/{id}/update', ['as' => 'admin.notice.update', 'uses' => 'NoticeCrudController@update']);
+    Route::get('index', ['as' => 'audit.log.index', 'uses' => 'ActivityController@index']);
+    Route::get('search', ['as' => 'audit.log.search', 'uses' => 'ActivityController@search']);
+    Route::get('user-name', ['as' => 'audit.log.user.name', 'uses' => 'ActivityController@getUserName']);
+
+    // Route::get('index', [ActivityController::class, 'index'])->name('audit-log-index');
+    // Route::get('search', [ActivityController::class, 'search'])->name('audit-log-search');
+    // Route::get('user-name', [ActivityController::class, 'getUserName'])->name('audit-log-user-name');
 }); // this should be the absolute last line of this file

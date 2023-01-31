@@ -2,8 +2,6 @@
 <li class="nav-item"><a class="nav-link" href="{{ backpack_url('dashboard') }}"><i class="la la-home nav-icon"></i>
         {{ trans('backpack::base.dashboard') }}</a></li>
 
-
-
 <li class="nav-item"><a class="nav-link" href="{{ backpack_url('elfinder') }}"><i class="nav-icon la la-files-o"></i>
         <span>{{ trans('backpack::crud.file_manager') }}</span></a></li>
 
@@ -33,7 +31,6 @@
             Notices</a></li>
 @endif
 
-
 @if (backpack_user()->hasRole('Super admin') || backpack_user()->hasPermissionTo('Settings'))
     <li class="nav-item nav-dropdown">
         <a class="nav-link nav-dropdown-toggle" href="#"><i class="nav-icon las la-user-cog"></i> Settings
@@ -60,3 +57,6 @@
         </ul>
     </li>
 @endif
+
+<li class='nav-item'><a class='nav-link' href="{{ route('audit.log.index') }}"><i class='nav-icon la la-memory'></i>
+        <span>Activity Log</span></a></li>

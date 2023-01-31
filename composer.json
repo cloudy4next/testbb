@@ -16,7 +16,8 @@
         "laravel/passport": "*",
         "laravel/tinker": "^2.5",
         "laravelcollective/html": "^6.3",
-        "mews/purifier": "^3.3"
+        "mews/purifier": "^3.3",
+        "spatie/laravel-activitylog": "^4.7"
     },
     "require-dev": {
         "backpack/generators": "*",
