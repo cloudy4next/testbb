@@ -26,6 +26,8 @@ use File;
  */
 class PageCrudController extends CrudController
 {
+    public  $module = 'Page Title';
+
     use CreateOperation;
     use ListOperation;
     use ShowOperation;
@@ -120,8 +122,12 @@ class PageCrudController extends CrudController
         $page->image = $fileName ?? NULL;
         $page->save();
 
+        //Notification start
+        $type = 'Created';
         $notification = User::first();
-        $notification->notify(new NewUserRegisterNotification($page));
+        $notification->notify(new NewUserRegisterNotification($page, $type, $this->module));
+        //notification end
+
         \Alert::success('page successfully created!')->flash();
 
         return redirect('admin/page');
@@ -164,6 +170,11 @@ class PageCrudController extends CrudController
 
         $page->save();
 
+        //Notification start
+        $type = 'Updated';
+        $notification = User::first();
+        $notification->notify(new NewUserRegisterNotification($page, $type, $this->module));
+        //notification end
         \Alert::success('page successfully updated!')->flash();
 
         return redirect()->back()->withInput();

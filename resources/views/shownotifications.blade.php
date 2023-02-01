@@ -13,9 +13,10 @@
         @foreach ($notifications as $notification)
             <div class="card bg-light mb-3" style="max-width: 100%; position:center;" id="noty">
                 {{-- <h5 class="card-title">Special title treatment</h5> --}}
-                <p class="card-text text-center"><b> {{ $notification->data['title'] }} </b>&nbsp;
-                    has just registered.
-                    [{{ date('j \\ F Y, g:i A', strtotime($notification->created_at)) }}]</p>
+                <p class="card-text text-center"><b> {{ $notification->data['module'] }} - {{ $notification->data['title'] }}
+                    </b>
+                    has just <b>{{ $notification->data['type'] }}</b> by <b>{{ $notification->data['userName'] }}</b>
+                    at {{ date('j \\ F Y, g:i A', strtotime($notification->created_at)) }}.</p>
                 <a href="#" class="btn btn-secondary btn-lg active mark-as-read" role="button" aria-pressed="true"
                     data-id="{{ $notification->id }}">Mark as Read</a>
             </div>

@@ -8,8 +8,10 @@ use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 use App\Models\Project;
 use App\Models\Category;
 use App\Models\Funded;
+use App\Models\User;
 use Carbon\Carbon;
 use File;
+use App\Notifications\NewUserRegisterNotification;
 
 /**
  * Class ProjectCrudController
@@ -18,6 +20,7 @@ use File;
  */
 class ProjectCrudController extends CrudController
 {
+    public $module = 'Project Title';
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
@@ -40,19 +43,19 @@ class ProjectCrudController extends CrudController
     protected function setupListOperation()
     {
 
-        $this->crud->denyAccess(['show','create', ]);
+        $this->crud->denyAccess(['show', 'create',]);
 
         $this->crud->enableExportButtons();
 
-        if(backpack_user()->hasPermissionTo('Project store')) {
+        if (backpack_user()->hasPermissionTo('Project store')) {
             $this->crud->allowAccess(['create']);
         }
 
-        if(!(backpack_user()->hasPermissionTo('Project delete'))) {
+        if (!(backpack_user()->hasPermissionTo('Project delete'))) {
             $this->crud->denyAccess(['delete']);
         }
 
-        if(!(backpack_user()->hasPermissionTo('Project edit'))) {
+        if (!(backpack_user()->hasPermissionTo('Project edit'))) {
             $this->crud->denyAccess(['update']);
         }
 
@@ -63,29 +66,29 @@ class ProjectCrudController extends CrudController
             'type' => 'row_number',
             'label' => '#',
             'orderable' => false,
-            ])->makeFirstColumn();
+        ])->makeFirstColumn();
 
         CRUD::column('title');
 
         $this->crud->addColumn([
             'name' => 'category_id',
             'label' => 'Category',
-            ]);
+        ]);
 
         $this->crud->addColumn([
             'name' => 'funded_id',
             'label' => 'Funded By',
-            ]);
+        ]);
 
         $this->crud->addColumn([
             'name' => 'user_id',
             'label' => 'Publish By',
-            ]);
+        ]);
 
         $this->crud->addColumn([
             'name' => 'created_at',
             'label' => 'Date',
-            ]);
+        ]);
     }
 
     public function create()
@@ -94,13 +97,13 @@ class ProjectCrudController extends CrudController
         $funded = Funded::pluck('name', 'id');
 
         return view('admin.project.create')
-        ->withcategory($category)->withfunded($funded);
+            ->withcategory($category)->withfunded($funded);
     }
 
     public function store(projectRequest $request)
     {
         $attachments = $request->image;
-        if($attachments != NULL){
+        if ($attachments != NULL) {
             $destinationPath = public_path() . "/uploads/project";
             $name = $attachments->getClientOriginalName();
             $fileName = time() . '_' . $name;
@@ -118,6 +121,12 @@ class ProjectCrudController extends CrudController
         $project->image = $fileName ?? NULL;
         $project->save();
 
+        //Notification start
+        $type = 'Created';
+        $notification = User::first();
+        $notification->notify(new NewUserRegisterNotification($project, $type, $this->module));
+        //notification end
+
         \Alert::success('project successfully created!')->flash();
 
         return redirect('admin/project');
@@ -130,8 +139,8 @@ class ProjectCrudController extends CrudController
         $funded = Funded::pluck('name', 'id');
 
         return view('admin.project.edit')
-        ->withcategory($category)
-        ->withData($data)->withfunded($funded);
+            ->withcategory($category)
+            ->withData($data)->withfunded($funded);
     }
 
     public function update(projectRequest $request, $id)
@@ -140,11 +149,11 @@ class ProjectCrudController extends CrudController
         $data = Project::where('id', '=', $id)->first();
 
         if (File::exists(public_path('uploads/project/' . $data->image))) {
-        File::delete(public_path('uploads/project/' . $data->image));
+            File::delete(public_path('uploads/project/' . $data->image));
         }
 
         $attachments = $request->image;
-        if($attachments != NULL){
+        if ($attachments != NULL) {
             $destinationPath = public_path() . "/uploads/project";
             $name = $attachments->getClientOriginalName();
             $fileName = time() . '_' . $name;
@@ -164,9 +173,13 @@ class ProjectCrudController extends CrudController
 
         $project->save();
 
+        //Notification start
+        $type = 'Updated';
+        $notification = User::first();
+        $notification->notify(new NewUserRegisterNotification($project, $type, $this->module));
+        //notification end
         \Alert::success('project successfully updated!')->flash();
 
         return redirect()->back()->withInput();
     }
-
 }

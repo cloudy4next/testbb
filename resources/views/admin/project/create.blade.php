@@ -166,7 +166,7 @@
 
             $('.funded').select2({
                 theme: "bootstrap",
-                placeholder: "Select status"
+                placeholder: "Select Funded By"
             });
         });
     </script>

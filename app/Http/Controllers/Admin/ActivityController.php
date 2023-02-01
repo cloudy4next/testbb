@@ -126,7 +126,6 @@ class ActivityController extends Controller
         $notifications = auth()->user()->unreadNotifications;
         return view('shownotifications', compact('notifications'));
     }
-    // resources\views\shownotifications.blade.php
     public function markNotification(Request $request)
     {
         auth()->user()

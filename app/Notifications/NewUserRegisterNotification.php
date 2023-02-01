@@ -6,20 +6,26 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use App\Models\User;
 
 class NewUserRegisterNotification extends Notification
 {
     use Queueable;
     public $data;
+    public $type;
+    public $module;
+
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($data)
+    public function __construct($data, $type, $module)
     {
         //
         $this->data = $data;
+        $this->type = $type;
+        $this->module = $module;
     }
 
     /**
@@ -55,8 +61,13 @@ class NewUserRegisterNotification extends Notification
      */
     public function toArray($notifiable)
     {
+        $userName = User::where('id', $this->data->user_id)->pluck('name');
+        // dd($userName[0]);
         return [
             'title' => $this->data->title,
+            'module' => $this->module,
+            'type' => $this->type,
+            'userName' => $userName[0],
         ];
     }
 }
