@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.3|^8.0",
+        "backpack/backupmanager": "*",
         "backpack/crud": "4.*",
         "backpack/filemanager": "*",
         "backpack/permissionmanager": "^6.0",

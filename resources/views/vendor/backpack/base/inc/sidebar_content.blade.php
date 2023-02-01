@@ -53,8 +53,10 @@
             @if (backpack_user()->hasRole('Super admin'))
                 <li class="nav-item"><a class="nav-link" href="{{ backpack_url('permission') }}"><i
                             class="nav-icon la la-key"></i> <span>Permissions</span></a></li>
+                <li class='nav-item'><a class='nav-link' href='{{ backpack_url('backup') }}'><i
+                            class='nav-icon la la-hdd-o'></i> Backups</a></li>
             @endif
-            @if (backpack_user()->hasRole('Super admin'))
+            @if (backpack_user()->hasRole('Super admin') || backpack_user()->hasPermissionTo('ActivityLog'))
                 <li class='nav-item'><a class='nav-link' href="{{ route('audit.log.index') }}"><i
                             class='nav-icon la la-memory'></i>
                         <span>Activity Log</span></a></li>

@@ -22,8 +22,7 @@
             <hr>
         @endforeach
     @else
-        <p class="btn
-                    btn-primary" style="display: block; margin-left: auto; margin-right: 0;">There are
+        <p class="btn btn-success" style="display: block; margin-left: auto; margin-right: 0;">There are
             no new
             notifications</p>
     @endif
