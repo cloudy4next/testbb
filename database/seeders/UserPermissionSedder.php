@@ -48,6 +48,8 @@ class UserPermissionSedder extends Seeder
             ['name' => 'News delete'],
             ['name' => 'Settings'],
             ['name' => 'Funded'],
+            ['name' => 'ActivityLog'],
+            ['name' => 'Notification'],
 
         ];
 

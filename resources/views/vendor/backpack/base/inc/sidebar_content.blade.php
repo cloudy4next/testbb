@@ -54,9 +54,12 @@
                 <li class="nav-item"><a class="nav-link" href="{{ backpack_url('permission') }}"><i
                             class="nav-icon la la-key"></i> <span>Permissions</span></a></li>
             @endif
+            @if (backpack_user()->hasRole('Super admin'))
+                <li class='nav-item'><a class='nav-link' href="{{ route('audit.log.index') }}"><i
+                            class='nav-icon la la-memory'></i>
+                        <span>Activity Log</span></a></li>
+            @endif
+
         </ul>
     </li>
 @endif
-
-<li class='nav-item'><a class='nav-link' href="{{ route('audit.log.index') }}"><i class='nav-icon la la-memory'></i>
-        <span>Activity Log</span></a></li>

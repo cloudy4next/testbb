@@ -47,15 +47,14 @@ Route::group([
         Route::post('notice/{id}/update', ['as' => 'admin.notice.update', 'uses' => 'NoticeCrudController@update']);
     });
 
-    Route::get('index', ['as' => 'audit.log.index', 'uses' => 'ActivityController@index']);
-    Route::get('search', ['as' => 'audit.log.search', 'uses' => 'ActivityController@search']);
-    Route::get('user-name', ['as' => 'audit.log.user.name', 'uses' => 'ActivityController@getUserName']);
-
-    Route::get('test', function () {
-        $lol = "1";
-        return view('vendor.backpack.base.inc.topbar_right_content', $lol);
+    Route::group(['middleware' => 'acl:ActivityLog'], function () {
+        Route::get('index', ['as' => 'audit.log.index', 'uses' => 'ActivityController@index']);
+        Route::get('search', ['as' => 'audit.log.search', 'uses' => 'ActivityController@search']);
+        Route::get('user-name', ['as' => 'audit.log.user.name', 'uses' => 'ActivityController@getUserName']);
     });
 
-    Route::get('notification', ['as' => 'notification.data', 'uses' => 'ActivityController@showNotificaton']);
-    Route::post('mark-as-read', ['as' => 'markNotification', 'uses' => 'ActivityController@markNotification']);
-}); // this should be the absolute last line of this file
+    Route::group(['middleware' => 'acl:Notification'], function () {
+        Route::get('notification', ['as' => 'notification.data', 'uses' => 'ActivityController@showNotificaton']);
+        Route::post('mark-as-read', ['as' => 'markNotification', 'uses' => 'ActivityController@markNotification']);
+    });
+});
