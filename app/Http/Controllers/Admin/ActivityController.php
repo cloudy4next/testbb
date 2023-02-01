@@ -24,7 +24,7 @@ class ActivityController extends Controller
         return view('admin.activity-log.index', [
             'logs' => $logs,
             'logTypes' => $logTypes
-            ]);
+        ]);
     }
 
     public function search(Request $request)
@@ -38,9 +38,9 @@ class ActivityController extends Controller
                 return back()->with('error', 'You must select both dates');
             }
             if ($request->to < $request->from) {
-                    return back()->with('error', 'Second date must be more than first one');
-                    }
-                    }
+                return back()->with('error', 'Second date must be more than first one');
+            }
+        }
         $query = $request->query();
         $logs = $this->searchData($request);
         $logTypes = $this->getLogTypeData();
@@ -55,8 +55,8 @@ class ActivityController extends Controller
             'logs' => $logs,
             'logTypes' => $logTypes,
             'query' => $query
-            ]);
-        }
+        ]);
+    }
 
     public function getUserName(Request $request)
     {
@@ -67,7 +67,7 @@ class ActivityController extends Controller
             ->where('name', 'like', "%{$searchTerm}%")
             ->get();
 
-            return view('admin.activity-log.user_names',[
+        return view('admin.activity-log.user_names', [
             'users' => $user
         ]);
     }
@@ -79,8 +79,8 @@ class ActivityController extends Controller
     public function getLogTypeData()
     {
         return ActivityLog::select('log_name')
-        ->groupBy('log_name')
-        ->get();
+            ->groupBy('log_name')
+            ->get();
     }
 
     public function searchData($request)
@@ -110,14 +110,32 @@ class ActivityController extends Controller
         }
 
         return $results
-        ->paginate(25);
+            ->paginate(25);
     }
 
     private function getUserIdsData($user_name)
     {
         return User::query()
-        ->select('id')
-        ->where('name', 'like', "%{$user_name}%")
-        ->get();
-     }
+            ->select('id')
+            ->where('name', 'like', "%{$user_name}%")
+            ->get();
+    }
+
+    public function showNotificaton()
+    {
+        $notifications = auth()->user()->unreadNotifications;
+        return view('shownotifications', compact('notifications'));
+    }
+    // resources\views\shownotifications.blade.php
+    public function markNotification(Request $request)
+    {
+        auth()->user()
+            ->unreadNotifications
+            ->when($request->input('id'), function ($query) use ($request) {
+                return $query->where('id', $request->input('id'));
+            })
+            ->markAsRead();
+
+        return response()->noContent();
+    }
 }

@@ -24,7 +24,6 @@ Route::group([
         Route::get('page/{id}/edit', ['as' => 'admin.page.edit', 'uses' => 'PageCrudController@edit']);
         Route::post('page/store', ['as' => 'admin.page.store', 'uses' => 'PageCrudController@store']);
         Route::post('page/{id}/update', ['as' => 'admin.page.update', 'uses' => 'PageCrudController@update']);
-
     });
     Route::group(['middleware' => 'acl:Page'], function () {
         Route::crud('category', 'CategoryCrudController');
@@ -52,7 +51,11 @@ Route::group([
     Route::get('search', ['as' => 'audit.log.search', 'uses' => 'ActivityController@search']);
     Route::get('user-name', ['as' => 'audit.log.user.name', 'uses' => 'ActivityController@getUserName']);
 
-    // Route::get('index', [ActivityController::class, 'index'])->name('audit-log-index');
-    // Route::get('search', [ActivityController::class, 'search'])->name('audit-log-search');
-    // Route::get('user-name', [ActivityController::class, 'getUserName'])->name('audit-log-user-name');
+    Route::get('test', function () {
+        $lol = "1";
+        return view('vendor.backpack.base.inc.topbar_right_content', $lol);
+    });
+
+    Route::get('notification', ['as' => 'notification.data', 'uses' => 'ActivityController@showNotificaton']);
+    Route::post('mark-as-read', ['as' => 'markNotification', 'uses' => 'ActivityController@markNotification']);
 }); // this should be the absolute last line of this file

@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Notifications\NewUserRegisterNotification;
 use App\Http\Requests\PageRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 use App\Models\Page;
+use App\Models\User;
 use App\Models\Category;
 use App\Repositories\page\pageInterface;
 use Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
@@ -40,7 +42,6 @@ class PageCrudController extends CrudController
         CRUD::setModel(\App\Models\Page::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/page');
         CRUD::setEntityNameStrings('page', 'pages');
-
     }
 
     /**
@@ -51,20 +52,20 @@ class PageCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        $this->crud->denyAccess(['show','create', ]);
+        $this->crud->denyAccess(['show', 'create',]);
 
         $this->crud->enableExportButtons();
 
-        if(backpack_user()->hasPermissionTo('Page store')) {
+        if (backpack_user()->hasPermissionTo('Page store')) {
             $this->crud->allowAccess(['create']);
         }
 
-        if(!(backpack_user()->hasPermissionTo('Page delete'))) {
+        if (!(backpack_user()->hasPermissionTo('Page delete'))) {
             $this->crud->denyAccess(['delete']);
         }
 
-        if(!(backpack_user()->hasPermissionTo('Page edit'))) {
-        $this->crud->denyAccess(['update']);
+        if (!(backpack_user()->hasPermissionTo('Page edit'))) {
+            $this->crud->denyAccess(['update']);
         }
 
 
@@ -87,7 +88,6 @@ class PageCrudController extends CrudController
             'name' => 'created_at',
             'label' => 'Date',
         ]);
-
     }
 
     public function create()
@@ -100,10 +100,10 @@ class PageCrudController extends CrudController
 
     public function store(PageRequest $request)
     {
-                // dd($request->all());
+        // dd($request->all());
 
         $attachments = $request->image;
-        if($attachments != NULL){
+        if ($attachments != NULL) {
             $destinationPath = public_path() . "/uploads/page";
             $name = $attachments->getClientOriginalName();
             $fileName = time() . '_' . $name;
@@ -120,6 +120,8 @@ class PageCrudController extends CrudController
         $page->image = $fileName ?? NULL;
         $page->save();
 
+        $notification = User::first();
+        $notification->notify(new NewUserRegisterNotification($page));
         \Alert::success('page successfully created!')->flash();
 
         return redirect('admin/page');
@@ -144,7 +146,7 @@ class PageCrudController extends CrudController
         }
 
         $attachments = $request->image;
-        if($attachments != NULL){
+        if ($attachments != NULL) {
             $destinationPath = public_path() . "/uploads/page";
             $name = $attachments->getClientOriginalName();
             $fileName = time() . '_' . $name;
@@ -166,5 +168,4 @@ class PageCrudController extends CrudController
 
         return redirect()->back()->withInput();
     }
-
 }
