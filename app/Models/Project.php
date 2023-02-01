@@ -4,11 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
 class Project extends Model
 {
     use \Backpack\CRUD\app\Models\Traits\CrudTrait;
     use HasFactory;
+    use LogsActivity;
 
 
     protected $fillable = ['user_id','funded_id','category_id', 'title', 'image', 'description'];
@@ -30,5 +32,14 @@ class Project extends Model
 
         return $this->belongsTo('App\Models\Funded');
 
+    }
+
+
+    public function getActivitylogOptions(): LogOptions
+        {
+        return LogOptions::defaults()->useLogName('Project')->logOnly([
+        'title',
+        'user_id',
+        ])->setDescriptionForEvent(fn(string $eventName) => "This Project has been {$eventName}");
     }
 }

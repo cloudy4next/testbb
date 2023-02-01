@@ -5,12 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
-use Spatie\Permission\Traits\HasRoles;
+use Spatie\Permission\Traits\HasRoles;use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
 class Category extends Model
 {
     use \Backpack\CRUD\app\Models\Traits\CrudTrait;
     // use HasFactory;
-
+    use LogsActivity;
     use HasFactory;
     use CrudTrait;
     use HasRoles;
@@ -29,10 +30,18 @@ class Category extends Model
     }
     public function news()
     {
-    return $this->hasMany('App\Models\News');
+        return $this->hasMany('App\Models\News');
     }
     public function notices()
     {
-    return $this->hasMany('App\Models\Notice');
+        return $this->hasMany('App\Models\Notice');
     }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->useLogName('Category')->logOnly([
+        'name',
+        ])->setDescriptionForEvent(fn(string $eventName) => "This category by has been {$eventName}");
+    }
+
 }

@@ -14,8 +14,12 @@ class Page extends Model
     use \Backpack\CRUD\app\Models\Traits\CrudTrait;
     use HasFactory;
 
-    protected $fillable = ['user_id', 'category_id', 'title', 'image', 'description'];
+    protected $fillable = [ 'category_id', 'title', 'image', 'description'];
 
+    protected $casts = [
+        'created_at' => 'integer',
+        'updated_at' => 'integer',
+        ];
 
     public function user() {
 
@@ -35,24 +39,11 @@ class Page extends Model
             class="la la-edit"></i>Edit</a>';
     }
 
-
-    /* start activity log */
-    protected static $logAttributes = [
-                'name',
-                'created_by',
-                'updated_by',
-                ];
-
-    protected static $logName = 'Page Created';
-
-    public function getDescriptionForEvent(string $eventName): LogOptions
+    public function getActivitylogOptions(): LogOptions
     {
-        return "This user has been {$eventName}";
+        return LogOptions::defaults()->useLogName('Page')->logOnly([
+        'title',
+        'user_id',
+        ])->setDescriptionForEvent(fn(string $eventName) => "This page has been {$eventName}");
     }
-
-     public function getActivitylogOptions(): LogOptions
-     {
-        return LogOptions::All();
-     }
-    /* end activity log */
 }

@@ -4,11 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
 class Funded extends Model
 {
     use \Backpack\CRUD\app\Models\Traits\CrudTrait;
     use HasFactory;
+    use LogsActivity;
+
     protected $fillable = ['name'];
 
     public function projects()
@@ -25,4 +28,12 @@ class Funded extends Model
     {
         return $this->hasMany('App\Models\Notice');
     }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+    return LogOptions::defaults()->useLogName('Funded By')->logOnly([
+        'name',
+    ])->setDescriptionForEvent(fn(string $eventName) => "This funded by has been {$eventName}");
+    }
+
 }

@@ -20,7 +20,7 @@ class ActivityController extends Controller
 
         $logs = $this->indexData();
         $logTypes = $this->getLogTypeData();
-        // dd($logTypes);
+        // dd($logs);
         return view('admin.activity-log.index', [
             'logs' => $logs,
             'logTypes' => $logTypes
@@ -88,7 +88,7 @@ class ActivityController extends Controller
         $user_ids = '';
 
         if (null != $request['user_name']) {
-            $user_ids = $this->getUserIds($request->input('user_name'));
+            $user_ids = $this->getUserIdsData($request->input('user_name'));
         }
 
         $results = DB::table('activity_log as ac');

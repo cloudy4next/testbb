@@ -24,9 +24,7 @@
     <div class="row">
         <div class="col-md-4 offset-8">
             <button onclick="generatePDF()" class="btn btn-sm btn-success float-right mr-3"><i class="la la-download"></i>
-                {{ trans('report.activity_log.download') }} </button>
-            <button onclick="window.print()" class="btn btn-sm btn-success float-right mr-3"><i class="la la-print"></i>
-                {{ trans('report.activity_log.print') }} </button>
+                {{ trans('Activity Log Download') }} </button>
         </div>
     </div>
 
@@ -88,7 +86,7 @@
                         <tr>
                             <th scope="row">{{ $loop->index + 1 }}</th>
                             <td>{{ $log->log_name }}</td>
-                            {{-- <td>{{ getUserName($log->causer_id) }}</td> --}}
+                            <td>{{ getUserName($log->causer_id) }}</td>
                             <td>{{ $log->description }}</td>
                             <td>{{ date_format(date_create($log->created_at), 'j, F Y') }}</td>
                             <td>{{ date_format(date_create($log->created_at), 'h:i:s A') }}</td>
