@@ -102,8 +102,6 @@ class PageCrudController extends CrudController
 
     public function store(PageRequest $request)
     {
-        // dd($request->all());
-
         $attachments = $request->image;
         if ($attachments != NULL) {
             $destinationPath = public_path() . "/uploads/page";

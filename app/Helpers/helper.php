@@ -1,6 +1,8 @@
 <?php
 
 use App\Models\User;
+use App\Models\Query;
+
 use Illuminate\Support\Facades\Auth;
 
 if (!function_exists('getUserName')) {
@@ -18,4 +20,12 @@ if (!function_exists('totalNotification')) {
         $notifications = auth()->user()->unreadNotifications;
         return count($notifications);
     }
+}
+
+if (!function_exists('totalQuery')) {
+function totalQuery($data)
+{
+    $totalQueries = Query::where('status', '0')->pluck('id');
+    return count($totalQueries);
+}
 }

@@ -2,17 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\CategoryRequest;
+use App\Http\Requests\QueryRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
-use App\Models\Category;
-
+use App\Models\Query;
 /**
- * Class CategoryCrudController
+ * Class QueryCrudController
  * @package App\Http\Controllers\Admin
  * @property-read \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $crud
  */
-class CategoryCrudController extends CrudController
+class QueryCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
@@ -27,9 +26,9 @@ class CategoryCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\Models\Category::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') . '/category');
-        CRUD::setEntityNameStrings('category', 'categories');
+        CRUD::setModel(\App\Models\Query::class);
+        CRUD::setRoute(config('backpack.base.route_prefix') . '/query');
+        CRUD::setEntityNameStrings('query', 'queries');
     }
 
     /**
@@ -41,35 +40,19 @@ class CategoryCrudController extends CrudController
     protected function setupListOperation()
     {
 
-        $this->crud->denyAccess(['show','create', ]);
+        $this->crud->denyAccess(['show', 'create','update','delete']);
+        $this->crud->addButtonFromModelFunction('line', 'additional_data_update', 'additionalDataUpdateButton',
+            'end');
 
-        $this->crud->enableExportButtons();
-
-        if(backpack_user()->hasPermissionTo('Category store')) {
-            $this->crud->allowAccess(['create']);
-        }
-
-        if(!(backpack_user()->hasPermissionTo('Category delete'))) {
-            $this->crud->denyAccess(['delete']);
-        }
-
-        if(!(backpack_user()->hasPermissionTo('Category edit'))) {
-            $this->crud->denyAccess(['update']);
-        }
-
-        $data = $this->getParent();
-
-        // CRUD::column('parent_id');
+        // CRUD::column('id');
         CRUD::column('name');
-
-        $this->crud->addColumn([
-            'name' => 'parent_id',
-            'label' => 'Parent',
-            'type' => 'closure',
-            'function' => function($entry) use ($data) {
-            return $data[$entry->parent_id] ?? '--';
-            }
-            ]);
+        CRUD::column('email');
+        CRUD::column('title');
+        // CRUD::column('description');
+        // CRUD::column('response_text');
+        // CRUD::column('status');
+        // CRUD::column('created_at');
+        // CRUD::column('updated_at');
 
         /**
          * Columns can be defined using the fluent syntax or array syntax:
@@ -86,19 +69,17 @@ class CategoryCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(CategoryRequest::class);
-        $data = $this->getParent();
+        CRUD::setValidation(QueryRequest::class);
 
-
-        $this->crud->addField([
-        'label' => "Parent",
-        'name' => 'parent_id',
-        'type' => 'select',
-        'entity' => 'children',
-        'attribute' => 'name',
-        ]);
-
+        // CRUD::field('id');
         CRUD::field('name');
+        CRUD::field('email');
+        CRUD::field('title');
+        // CRUD::field('description');
+        CRUD::field('response_text');
+        // CRUD::field('status');
+        // CRUD::field('created_at');
+        // CRUD::field('updated_at');
 
         /**
          * Fields can be defined using the fluent syntax or array syntax:
@@ -113,19 +94,29 @@ class CategoryCrudController extends CrudController
      * @see https://backpackforlaravel.com/docs/crud-operation-update
      * @return void
      */
-    protected function setupUpdateOperation()
+    // protected function setupUpdateOperation()
+    // {
+    //     $this->setupCreateOperation();
+    // }
+
+    public function showDetails()
     {
-        $this->setupCreateOperation();
+        $queries = Query::first();
+        return view('admin.query.show')
+        ->withqueries($queries);
     }
 
-    private function getParent(): array
+    public function markAsRead(QueryRequest $request)
     {
-        $results = Category::select('id', 'name')->get()->toArray();
-        $data = [];
-        foreach ($results as $result) {
-            $data[$result['id']] = $result['name'];
-            }
+        $query = Query::find($request->id);
+        $query->status = '1';
+        $query->save();
 
-        return $data;
+        \Alert::success('Query successfully Read!')->flash();
+
+        return redirect()->back()->withInput();
+
     }
+
+
 }

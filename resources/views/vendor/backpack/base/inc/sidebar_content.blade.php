@@ -5,6 +5,9 @@
 <li class="nav-item"><a class="nav-link" href="{{ backpack_url('elfinder') }}"><i class="nav-icon la la-files-o"></i>
         <span>{{ trans('backpack::crud.file_manager') }}</span></a></li>
 
+<li class='nav-item'><a class='nav-link' href='{{ backpack_url('query') }}'><i class='nav-icon las la-comments'></i>
+        Queries</a></li>
+
 @if (backpack_user()->hasPermissionTo('Page'))
     <li class='nav-item'><a class='nav-link' href='{{ backpack_url('page') }}'><i class='nav-icon las la-file'></i>
             Pages</a></li>

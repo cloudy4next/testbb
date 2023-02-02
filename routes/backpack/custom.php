@@ -57,4 +57,10 @@ Route::group([
         Route::get('notification', ['as' => 'notification.data', 'uses' => 'ActivityController@showNotificaton']);
         Route::post('mark-as-read', ['as' => 'markNotification', 'uses' => 'ActivityController@markNotification']);
     });
+
+    Route::crud('query', 'QueryCrudController');
+    Route::get('query/{id}/show-detail', ['as' => 'admin.show.detail', 'uses' => 'QueryCrudController@showDetails']);
+    Route::post('query/{id}/mark-as-read', ['as' => 'admin.query.read', 'uses' => 'QueryCrudController@markAsRead']);
+    Route::get('dashboard', ['as' => 'dashboard', 'uses' => 'DashBoardController@dashboard']);
+
 });

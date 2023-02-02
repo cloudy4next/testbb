@@ -8,8 +8,11 @@ use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 use App\Models\Notice;
 use App\Models\Category;
 use App\Models\Funded;
+use App\Models\User;
 use Carbon\Carbon;
 use File;
+use App\Notifications\NewUserRegisterNotification;
+
 /**
  * Class NoticeCrudController
  * @package App\Http\Controllers\Admin
@@ -17,6 +20,8 @@ use File;
  */
 class NoticeCrudController extends CrudController
 {
+    public $module = 'Notice Title';
+
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
@@ -126,6 +131,12 @@ class NoticeCrudController extends CrudController
     $notice->image = $fileName ?? NULL;
     $notice->save();
 
+    //Notification start
+    $type = 'Created';
+    $notification = User::first();
+    $notification->notify(new NewUserRegisterNotification($notice, $type, $this->module));
+    //notification end
+
     \Alert::success('notice successfully created!')->flash();
 
     return redirect('admin/notice');
@@ -171,6 +182,12 @@ class NoticeCrudController extends CrudController
         $notice->image = $fileName ?? NULL;
 
         $notice->save();
+
+        //Notification start
+        $type = 'Updated';
+        $notification = User::first();
+        $notification->notify(new NewUserRegisterNotification($notice, $type, $this->module));
+        //notification end
 
         \Alert::success('notice successfully updated!')->flash();
 

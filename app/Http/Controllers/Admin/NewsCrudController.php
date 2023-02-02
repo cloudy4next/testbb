@@ -7,6 +7,8 @@ use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 use App\Models\News;
 use App\Models\Category;
+use App\Models\User;
+use App\Notifications\NewUserRegisterNotification;
 use App\Models\Funded;
 use Carbon\Carbon;
 use File;
@@ -18,6 +20,7 @@ use File;
  */
 class NewsCrudController extends CrudController
 {
+        public $module = 'News Title';
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
@@ -122,6 +125,12 @@ class NewsCrudController extends CrudController
         $news->image = $fileName ?? NULL;
         $news->save();
 
+        //Notification start
+        $type = 'Created';
+        $notification = User::first();
+        $notification->notify(new NewUserRegisterNotification($news, $type, $this->module));
+        //notification end
+
         \Alert::success('news successfully created!')->flash();
 
         return redirect('admin/news');
@@ -166,6 +175,12 @@ class NewsCrudController extends CrudController
         $news->image = $fileName ?? NULL;
 
         $news->save();
+
+        //Notification start
+        $type = 'Created';
+        $notification = User::first();
+        $notification->notify(new NewUserRegisterNotification($news, $type, $this->module));
+        //notification end
 
         \Alert::success('news successfully updated!')->flash();
 
