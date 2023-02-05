@@ -102,6 +102,7 @@ class ProjectCrudController extends CrudController
 
     public function store(projectRequest $request)
     {
+        // dd($request->funded_id);
         $attachments = $request->image;
         if ($attachments != NULL) {
             $destinationPath = public_path() . "/uploads/project";

@@ -17,3 +17,11 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('categories', 'Api\ReactApiController@getCategory');
+Route::get('pages', 'Api\ReactApiController@getPages');
+Route::get('notices', 'Api\ReactApiController@getNotice');
+Route::get('projects', 'Api\ReactApiController@getProjects');
+Route::get('News', 'Api\ReactApiController@getNews');
+Route::post('qouery-submit', 'Api\ReactApiController@postQueries');
+// Route::get('Category', 'Api\ReactApiController@getCategory');
