@@ -44,7 +44,7 @@
                     <div class="row">
                         <div class="form-group col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3">
                             <label for="category"> Category </label> <span class="text-danger">*</span>
-                            {!! Form::select('category_id', $category, $data->category_id, '--', [
+                            {!! Form::select('category_id', $category ?? '--', $data->category_id, [
                                 'class' => 'form-control category',
                                 'id' => 'category_id',
                                 'tabindex' => 2,

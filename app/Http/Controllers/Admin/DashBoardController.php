@@ -24,4 +24,9 @@ class DashBoardController extends Controller
             ]);
 
     }
+    public function myAccount(Request $request)
+    {
+        return view('admin.my_account');
+
+    }
 }
