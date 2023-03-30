@@ -18,7 +18,7 @@ Route::group([
     'namespace'  => 'App\Http\Controllers\Admin',
 ], function () { // custom admin routes
 
-    Route::get('edit-account-info', ['as' => 'edit-account-info', 'uses' => 'DashBoardController@myAccount']);
+    // Route::get('edit-account-info', ['as' => 'edit-account-info', 'uses' => 'DashBoardController@myAccount']);
 
     Route::group(['middleware' => 'acl:Page'], function () {
         Route::crud('page', 'PageCrudController');

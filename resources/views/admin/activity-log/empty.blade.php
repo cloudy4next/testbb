@@ -9,7 +9,7 @@
 @endpush
 @section('content')
 
-    <div class="card">
+    {{-- <div class="card">
         <div class="card-body">
             <form class="form-inline" method="get" action="{{ route('audit.log.search') }}">
                 @csrf
@@ -23,13 +23,13 @@
                 </nav>
             </form>
         </div>
-    </div>
+    </div> --}}
 
     <br>
     <div class="card p-4">
         <div class="row">
             <div class="col-md-10">
-                <h1>No data match your search criteria</h1>
+                <h1>No Farmer data available</h1>
             </div>
         </div>
     </div>

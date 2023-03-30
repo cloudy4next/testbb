@@ -26,7 +26,7 @@ class DashBoardController extends Controller
     }
     public function myAccount(Request $request)
     {
-        return view('admin.my_account');
+        return view('vendor.backpack.base.my_account');
 
     }
 }

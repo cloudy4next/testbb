@@ -19,7 +19,7 @@
 @section('header')
     <section class="content-header">
         <div class="container-fluid mb-3">
-            <h1>LoLodile</h1>
+            <h1>My Account</h1>
         </div>
     </section>
 @endsection
@@ -56,7 +56,7 @@
                 <div class="card padding-10">
 
                     <div class="card-header">
-                        LoLodile
+                        My Account
                     </div>
 
                     <div class="card-body backpack-profile bold-labels">

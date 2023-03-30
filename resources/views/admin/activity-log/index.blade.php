@@ -147,7 +147,7 @@
 
             var options = {
                 margin: 10,
-                filename: fileName != '' ? fileName : 'tib-report',
+                filename: fileName != '' ? fileName : 'activity-log',
                 pagebreak: {
                     avoid: '.pagebreak'
                 }
