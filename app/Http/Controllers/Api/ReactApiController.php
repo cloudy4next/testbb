@@ -19,12 +19,14 @@ class ReactApiController extends Controller
     {
         $categories = Category::with('children')->get();
 
-        return response()->json(['success' => $categories], 200);
 
-        if(empty($procategoriesjects))
+        if($categories->count() == 0)
         {
             return response()->json(['error' => 'No Resource Found!'], 404);
         }
+
+        return response()->json(['success' => $categories], 200);
+
 
     }
 
@@ -32,7 +34,7 @@ class ReactApiController extends Controller
     {
         $notice = Notice::get();
 
-        if(empty($notice))
+        if($notice->count() == 0)
         {
             return response()->json(['error' => 'No Resource Found!'], 404);
         }
@@ -46,7 +48,7 @@ class ReactApiController extends Controller
     {
         $page = Page::get();
 
-        if(empty($page))
+        if($page->count() == 0)
         {
             return response()->json(['error' => 'No Resource Found!'], 404);
         }
@@ -60,7 +62,7 @@ class ReactApiController extends Controller
 
         $projects = Project::get();
 
-        if(empty($projects))
+        if($projects ->count() == 0)
         {
             return response()->json(['error' => 'No Resource Found!'], 404);
         }
@@ -74,7 +76,7 @@ class ReactApiController extends Controller
     {
         $news = News::get();
 
-        if(empty($news))
+        if($news->count() == 0)
         {
             return response()->json(['error' => 'No Resource Found!'], 404);
         }
