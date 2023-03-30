@@ -9,10 +9,8 @@
     "license": "MIT",
     "require": {
         "php": "^7.3|^8.0",
-        "backpack/backupmanager": "*",
-        "backpack/crud": "4.*",
-        "backpack/filemanager": "*",
-        "backpack/permissionmanager": "^6.0",
+        "cloudy4next/backupmanager": "^4.1.1",
+        "cloudy4next/filemanager": "^4.1.1",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "intervention/image": "^2.7",
@@ -22,10 +20,29 @@
         "laravelcollective/html": "^6.3",
         "mews/purifier": "^3.3",
         "spatie/laravel-activitylog": "^4.7",
-        "spatie/laravel-analytics": "*"
+        "spatie/laravel-analytics": "*",
+        "cloudy4next/crud": "^2.0.0",
+        "cloudy4next/permissionmanager": "1.0.1"
     },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "git@github.com:cloudy4next/crud.git"
+        },
+        {
+            "type": "vcs",
+            "url": "git@github.com:cloudy4next/permissionmanager.git"
+        },
+        {
+            "type": "vcs",
+            "url": "git@github.com:cloudy4next/filemanager.git"
+        },
+        {
+            "type": "vcs",
+            "url": "git@github.com:cloudy4next/backupmanager.git"
+        }
+    ],
     "require-dev": {
-        "backpack/generators": "*",
         "barryvdh/laravel-debugbar": "^3.7",
         "facade/ignition": "^2.5",
         "fakerphp/faker": "^1.9.1",
