@@ -23,5 +23,6 @@ Route::get('pages', 'Api\ReactApiController@getPages');
 Route::get('notices', 'Api\ReactApiController@getNotice');
 Route::get('projects', 'Api\ReactApiController@getProjects');
 Route::get('news', 'Api\ReactApiController@getNews');
+Route::get('articles', 'Api\ReactApiController@getArticles');
 Route::post('query', 'Api\ReactApiController@postQueries');
 // Route::get('Category', 'Api\ReactApiController@getCategory');

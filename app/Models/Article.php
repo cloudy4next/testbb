@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
 
-class News extends Model
+class Article extends Model
 {
     use \Backpack\CRUD\app\Models\Traits\CrudTrait;
     use HasFactory;
@@ -36,7 +36,7 @@ class News extends Model
 
     public function getActivitylogOptions(): LogOptions
     {
-        return LogOptions::defaults()->useLogName('News')->logOnly([
+        return LogOptions::defaults()->useLogName('Article')->logOnly([
         'title',
         'user_id',
         ])->setDescriptionForEvent(fn(string $eventName) => "This news has been {$eventName}");

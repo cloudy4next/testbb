@@ -29,6 +29,12 @@ class Funded extends Model
         return $this->hasMany('App\Models\Notice');
     }
 
+
+    public function articles()
+    {
+        return $this->hasMany('App\Models\Article');
+    }
+
     public function getActivitylogOptions(): LogOptions
     {
     return LogOptions::defaults()->useLogName('Funded By')->logOnly([

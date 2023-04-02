@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\NewsRequest;
+use App\Http\Requests\ArticleRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
-use App\Models\News;
+use App\Models\Article;
 use App\Models\Category;
 use App\Models\User;
 use App\Notifications\NewUserRegisterNotification;
@@ -14,19 +14,19 @@ use Carbon\Carbon;
 use File;
 
 /**
- * Class NewsCrudController
+ * Class ArticleCrudController
  * @package App\Http\Controllers\Admin
  * @property-read \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $crud
  */
-class NewsCrudController extends CrudController
+class ArticleCrudController extends CrudController
 {
-    public $module = 'News Title';
+    public $module = 'Article Title';
+
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\BulkDeleteOperation;
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -35,9 +35,9 @@ class NewsCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\Models\News::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') . '/news');
-        CRUD::setEntityNameStrings('news', 'news');
+        CRUD::setModel(\App\Models\Article::class);
+        CRUD::setRoute(config('backpack.base.route_prefix') . '/article');
+        CRUD::setEntityNameStrings('article', 'articles');
     }
 
     /**
@@ -49,19 +49,20 @@ class NewsCrudController extends CrudController
     protected function setupListOperation()
     {
 
+
         $this->crud->denyAccess(['show','create', ]);
 
         $this->crud->enableExportButtons();
 
-        if(backpack_user()->hasPermissionTo('News store')) {
+        if(backpack_user()->hasPermissionTo('Article store')) {
             $this->crud->allowAccess(['create']);
         }
 
-        if(!(backpack_user()->hasPermissionTo('News delete'))) {
+        if(!(backpack_user()->hasPermissionTo('Article delete'))) {
             $this->crud->denyAccess(['delete']);
         }
 
-        if(!(backpack_user()->hasPermissionTo('News edit'))) {
+        if(!(backpack_user()->hasPermissionTo('Article edit'))) {
             $this->crud->denyAccess(['update']);
         }
 
@@ -93,98 +94,104 @@ class NewsCrudController extends CrudController
           'name' => 'created_at',
           'label' => 'Date',
           ]);
+
+        /**
+         * Columns can be defined using the fluent syntax or array syntax:
+         * - CRUD::column('price')->type('number');
+         * - CRUD::addColumn(['name' => 'price', 'type' => 'number']);
+         */
     }
+
 
     public function create()
     {
         $category = Category::pluck('name', 'id');
         $funded = Funded::pluck('name', 'id');
 
-        return view('admin.news.create')
+        return view('admin.articles.create')
         ->withcategory($category)->withfunded($funded);
     }
 
-    public function store(newsRequest $request)
+    public function store(ArticleRequest $request)
     {
         $attachments = $request->image;
         if($attachments != NULL){
-            $destinationPath = public_path() . "/uploads/news";
+            $destinationPath = public_path() . "/uploads/articles";
             $name = $attachments->getClientOriginalName();
             $fileName = time() . '_' . $name;
             $fileName = preg_replace('/\s+/', '_', $fileName);
             $attachments->move($destinationPath, $fileName);
         }
-        $news = new News();
-        $news->title = $request['title'];
-        $news->description = $request['description'];
-        $news->status = $request['status'];
-        $news->category_id = $request['category_id'];
-        $news->user_id = backpack_user()->id;
-        $news->funded_id = $request->funded_id;
-        $news->created_at = Carbon::now();
-        $news->image = $fileName ?? NULL;
-        $news->save();
+        $articles = new Article();
+        $articles->title = $request['title'];
+        $articles->description = $request['description'];
+        $articles->status = $request['status'];
+        $articles->category_id = $request['category_id'];
+        $articles->user_id = backpack_user()->id;
+        $articles->funded_id = $request->funded_id;
+        $articles->created_at = Carbon::now();
+        $articles->image = $fileName ?? NULL;
+        $articles->save();
 
         //Notification start
         $type = 'Created';
         $notification = User::first();
-        $notification->notify(new NewUserRegisterNotification($news, $type, $this->module));
+        $notification->notify(new NewUserRegisterNotification($articles, $type, $this->module));
         //notification end
 
-        \Alert::success('news successfully created!')->flash();
+        \Alert::success('articles successfully created!')->flash();
 
-        return redirect('admin/news');
+        return redirect('admin/articles');
     }
 
     public function edit($id)
     {
         $category = Category::pluck('name', 'id');
-        $data = News::where('id', '=', $id)->first();
+        $data = Article::where('id', '=', $id)->first();
         $funded = Funded::pluck('name', 'id');
 
-        return view('admin.news.edit')
+        return view('admin.articles.edit')
         ->withcategory($category)
         ->withData($data)->withfunded($funded);
     }
 
-    public function update(newsRequest $request, $id)
+    public function update(ArticleRequest $request, $id)
     {
-        $data = News::where('id', '=', $id)->first();
+        $data = Article::where('id', '=', $id)->first();
 
-        if (File::exists(public_path('uploads/news/' . $data->image))) {
-            File::delete(public_path('uploads/news/' . $data->image));
+        if (File::exists(public_path('uploads/articles/' . $data->image))) {
+            File::delete(public_path('uploads/articles/' . $data->image));
         }
 
         $attachments = $request->image;
         if($attachments != NULL){
-            $destinationPath = public_path() . "/uploads/news";
+            $destinationPath = public_path() . "/uploads/articles";
             $name = $attachments->getClientOriginalName();
             $fileName = time() . '_' . $name;
             $fileName = preg_replace('/\s+/', '_', $fileName);
             $attachments->move($destinationPath, $fileName);
         }
-        $news = News::find($id);
-        $news->title = $request['title'];
-        $news->description = $request['description'];
-        $news->status = $request['status'];
-        $news->category_id = $request['category_id'];
-        $news->user_id = backpack_user()->id;
-        $news->funded_id = $request->funded_id;
+        $articles = Article::find($id);
+        $articles->title = $request['title'];
+        $articles->description = $request['description'];
+        $articles->status = $request['status'];
+        $articles->category_id = $request['category_id'];
+        $articles->user_id = backpack_user()->id;
+        $articles->funded_id = $request->funded_id;
 
-        $news->created_at = Carbon::now();
-        $news->image = $fileName ?? NULL;
+        $articles->created_at = Carbon::now();
+        $articles->image = $fileName ?? NULL;
 
-        $news->save();
+        $articles->save();
 
         //Notification start
         $type = 'Created';
         $notification = User::first();
-        $notification->notify(new NewUserRegisterNotification($news, $type, $this->module));
+        $notification->notify(new NewUserRegisterNotification($articles, $type, $this->module));
         //notification end
 
-        \Alert::success('news successfully updated!')->flash();
+        \Alert::success('articles successfully updated!')->flash();
 
         return redirect()->back()->withInput();
     }
-
 }

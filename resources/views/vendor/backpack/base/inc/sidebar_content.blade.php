@@ -5,16 +5,15 @@
 <li class="nav-item"><a class="nav-link" href="{{ backpack_url('elfinder') }}"><i class="nav-icon la la-files-o"></i>
         <span>{{ trans('backpack::crud.file_manager') }}</span></a></li>
 
+<li class='nav-item'><a class='nav-link' href='{{ backpack_url('pptx') }}'><i class="las la-file-powerpoint"></i>
+        Upload PPTX</a></li>
+
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('query') }}'><i class='nav-icon las la-comments'></i>
         Queries</a></li>
 
 @if (backpack_user()->hasPermissionTo('Page'))
     <li class='nav-item'><a class='nav-link' href='{{ backpack_url('page') }}'><i class='nav-icon las la-file'></i>
             Pages</a></li>
-@endif
-@if (backpack_user()->hasPermissionTo('Category'))
-    <li class='nav-item'><a class='nav-link' href='{{ backpack_url('category') }}'><i class='nav-icon las la-tag'></i>
-            Categories</a></li>
 @endif
 
 @if (backpack_user()->hasPermissionTo('Project'))
@@ -28,10 +27,21 @@
             News</a></li>
 @endif
 
+@if (backpack_user()->hasPermissionTo('Article'))
+    <li class='nav-item'><a class='nav-link' href='{{ backpack_url('article') }}'><i class="las la-book"></i>
+            Articles</a></li>
+@endif
+
+
 @if (backpack_user()->hasPermissionTo('Notice'))
     <li class='nav-item'><a class='nav-link' href='{{ backpack_url('notice') }}'><i
                 class='nav-icon las la-bullhorn'></i>
-            Notices</a></li>
+            Notices/Circulars</a></li>
+@endif
+
+@if (backpack_user()->hasPermissionTo('Category'))
+    <li class='nav-item'><a class='nav-link' href='{{ backpack_url('category') }}'><i class='nav-icon las la-tag'></i>
+            Categories</a></li>
 @endif
 
 @if (backpack_user()->hasRole('Super admin') || backpack_user()->hasPermissionTo('Settings'))

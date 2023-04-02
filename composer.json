@@ -10,7 +10,8 @@
     "require": {
         "php": "^7.3|^8.0",
         "cloudy4next/backupmanager": "^4.1.1",
-        "cloudy4next/filemanager": "^4.1.1",
+        "cloudy4next/filemanager": "4.1.1",
+        "cloudy4next/generators": "4.1.1",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "intervention/image": "^2.7",
@@ -25,6 +26,10 @@
         "cloudy4next/permissionmanager": "1.0.1"
     },
     "repositories": [
+        {
+            "type": "vcs",
+            "url": "git@github.com:cloudy4next/generators.git"
+        },
         {
             "type": "vcs",
             "url": "git@github.com:cloudy4next/crud.git"

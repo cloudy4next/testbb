@@ -43,6 +43,35 @@ class ReactApiController extends Controller
 
     }
 
+    public function getArticles(Request $request)
+    {
+
+        $articles = News::all()->toArray(); // should be articles
+
+        if (empty($articles)) {
+
+            return response()->json(['error' => 'No Resource Found!'], 404);
+        }
+        $lastFive  =  array_slice($articles, -5);
+
+        return response()->json(['success' => $news,'articles' => $lastFive], 200);
+
+
+    }
+
+    public function getNews(Request $request)
+    {
+        $news = News::all()->toArray();
+
+        if (empty($news)) {
+
+            return response()->json(['error' => 'No Resource Found!'], 404);
+        }
+        $lastFive  =  array_slice($news, -5);
+
+        return response()->json(['success' => $news,'lastFive' => $lastFive], 200);
+
+    }
 
     public function getPages(Request $request)
     {
@@ -72,19 +101,7 @@ class ReactApiController extends Controller
 
     }
 
-    public function getNews(Request $request)
-    {
-        $news = News::get();
 
-        if($news->count() == 0)
-        {
-            return response()->json(['error' => 'No Resource Found!'], 404);
-        }
-
-
-        return response()->json(['success' => $news], 200);
-
-    }
 
     public function postQueries(Request $request)
     {

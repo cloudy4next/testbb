@@ -55,4 +55,23 @@ class User extends Authenticatable
         'user_id',
         ])->setDescriptionForEvent(fn(string $eventName) => "This User has been {$eventName}");
     }
+
+    public function articles()
+    {
+        return $this->hasMany('App\Models\Article');
+    }
+
+        public function pages()
+    {
+        return $this->hasMany('App\Models\Page');
+    }
+    public function news()
+    {
+        return $this->hasMany('App\Models\News');
+    }
+    public function notices()
+    {
+        return $this->hasMany('App\Models\Notice');
+    }
+
 }

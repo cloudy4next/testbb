@@ -37,6 +37,16 @@ class Category extends Model
         return $this->hasMany('App\Models\Notice');
     }
 
+    public function articles()
+    {
+        return $this->hasMany('App\Models\Article');
+    }
+
+        public function pptx()
+    {
+        return $this->hasMany('App\Models\PPTX');
+    }
+
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()->useLogName('Category')->logOnly([

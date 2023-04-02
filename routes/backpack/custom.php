@@ -31,17 +31,23 @@ Route::group([
         Route::crud('funded', 'FundedCrudController');
     });
 
-    Route::group(['middleware' => 'acl:Page'], function () {
+    Route::group(['middleware' => 'acl:Article'], function () {
+        Route::crud('article', 'ArticleCrudController');
+        Route::post('article/store', ['as' => 'admin.articles.store', 'uses' => 'ArticleCrudController@store']);
+        Route::post('article/{id}/update', ['as' => 'admin.articles.update', 'uses' => 'ArticleCrudController@update']);
+    });
+
+    Route::group(['middleware' => 'acl:Project'], function () {
         Route::crud('project', 'ProjectCrudController');
         Route::post('project/store', ['as' => 'admin.project.store', 'uses' => 'ProjectCrudController@store']);
         Route::post('project/{id}/update', ['as' => 'admin.project.update', 'uses' => 'ProjectCrudController@update']);
     });
-    Route::group(['middleware' => 'acl:Page'], function () {
+    Route::group(['middleware' => 'acl:News'], function () {
         Route::crud('news', 'NewsCrudController');
         Route::post('news/store', ['as' => 'admin.news.store', 'uses' => 'NewsCrudController@store']);
         Route::post('news/{id}/update', ['as' => 'admin.news.update', 'uses' => 'NewsCrudController@update']);
     });
-    Route::group(['middleware' => 'acl:Page'], function () {
+    Route::group(['middleware' => 'acl:Notice'], function () {
 
         Route::crud('notice', 'NoticeCrudController');
         Route::post('notice/store', ['as' => 'admin.notice.store', 'uses' => 'NoticeCrudController@store']);
@@ -64,4 +70,6 @@ Route::group([
     Route::post('query/{id}/mark-as-read', ['as' => 'admin.query.read', 'uses' => 'QueryCrudController@markAsRead']);
     Route::get('dashboard', ['as' => 'dashboard', 'uses' => 'DashBoardController@dashboard']);
 
+
+    Route::crud('pptx', 'PPTXCrudController');
 });
