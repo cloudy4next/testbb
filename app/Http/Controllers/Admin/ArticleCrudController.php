@@ -141,7 +141,7 @@ class ArticleCrudController extends CrudController
 
         \Alert::success('articles successfully created!')->flash();
 
-        return redirect('admin/articles');
+        return redirect('admin/article');
     }
 
     public function edit($id)

@@ -51,8 +51,8 @@ class PPTXCrudController extends CrudController
         CRUD::column('category_id');
         CRUD::column('name');
         CRUD::column('path');
-        CRUD::column('created_at');
-        CRUD::column('updated_at');
+        // CRUD::column('created_at');
+        // CRUD::column('updated_at');
 
         /**
          * Columns can be defined using the fluent syntax or array syntax:

@@ -18,6 +18,7 @@
                     'class' => 'form-horizontal',
                     'novalidate',
                     'files' => true,
+                    'enctype' => 'multipart/form-data',
                 ]) !!}
                 <div class="card-header">
                     <i class="la la-plus"></i> Create pptx

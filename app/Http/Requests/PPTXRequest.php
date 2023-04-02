@@ -26,8 +26,8 @@ class PPTXRequest extends FormRequest
     public function rules()
     {
         return [
-            // 'category' => 'required',
-            'path' => 'required|mime:xlsx,xls'
+            'name' => 'required|min:5',
+            'path' => 'mimes:pptx'
 
         ];
     }
@@ -52,7 +52,7 @@ class PPTXRequest extends FormRequest
     public function messages()
     {
         return [
-            'path.required' => 'Select PPTX file Upload!',
+            // 'path.required' => 'Select PPTX file Upload!',
         ];
     }
 }
