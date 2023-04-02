@@ -17,11 +17,11 @@ class DatabaseSeeder extends Seeder
         $this->call([
         UserPermissionSedder::class,
         ]);
-        \App\Models\Category::factory(10)->create();
-        \App\Models\Page::factory(20)->create();
-        \App\Models\Notice::factory(20)->create();
-        \App\Models\News::factory(20)->create();
-        \App\Models\Project::factory(20)->create();
+        // \App\Models\Category::factory(10)->create();
+        // \App\Models\Page::factory(20)->create();
+        // \App\Models\Notice::factory(20)->create();
+        // \App\Models\News::factory(20)->create();
+        // \App\Models\Project::factory(20)->create();
 
     }
 }
