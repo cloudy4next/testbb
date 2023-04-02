@@ -61,7 +61,7 @@ class ReactApiController extends Controller
 
         public function getPptx(Request $request)
     {
-
+        $pptx_array =[];
         $pptx = PPTX::all(); // should be articles
 
         if (empty($pptx)) {
