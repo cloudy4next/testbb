@@ -64,7 +64,7 @@ class ReactApiController extends Controller
         $pptx_array =[];
         $pptx = PPTX::all(); // should be articles
 
-        if (empty($pptx)) {
+        if ($pptx->count()==0) {
 
             return response()->json(['error' => 'No Resource Found!'], 404);
         }
