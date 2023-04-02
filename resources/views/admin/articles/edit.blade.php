@@ -1,11 +1,11 @@
 @extends('admin.layout.master', [
 'breadcrumb' => [
-{{-- 'news' => route('admin.news'), --}}
-'news add' => false,
+{{-- 'article' => route('admin.article'), --}}
+'article edit' => false,
 ]
 ])
 
-@section('news-title', 'edit news')
+@section('article-title', 'edit article')
 
 @section('content')
     @parent
@@ -20,7 +20,7 @@
                     'files' => true,
                 ]) !!}
                 <div class="card-header">
-                    <i class="la la-plus"></i> Create news
+                    <i class="la la-plus"></i> Create article
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -116,7 +116,7 @@
                                 }
                             @endphp
                             {{-- {{ $data->image }} --}}
-                            <div> <a href="{{ URL::to('/uploads/news/' . $data->image) }}" download>
+                            <div> <a href="{{ URL::to('/uploads/article/' . $data->image) }}" download>
                                     {{ $data->image }} </a>
                             </div>
                         </div>
@@ -128,7 +128,7 @@
                                 'class' => 'form-control description',
                                 'id' => 'description',
                                 'rows' => '2',
-                                'placeholder' => 'Enter news description',
+                                'placeholder' => 'Enter article description',
                                 'tabindex' => 5,
                                 'required' => 'required',
                                 'data-error' => trans('exam.validator_massege'),
@@ -147,7 +147,7 @@
                         <span class="mr-3"> Save </span>
                     </button>
 
-                    <a href="{!! url('/admin/news') !!}" class="btn btn-default"><span class="la la-ban"></span>
+                    <a href="{!! url('/admin/article') !!}" class="btn btn-default"><span class="la la-ban"></span>
                         &nbsp;Cancel</a>
                 </div>
                 {!! Form::close() !!}

@@ -9,6 +9,7 @@ use App\Models\Notice;
 use App\Models\Page;
 use App\Models\Project;
 use App\Models\News;
+use App\Models\PPTX;
 use App\Models\Query;
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
@@ -32,7 +33,7 @@ class ReactApiController extends Controller
 
     public function getNotice(Request $request)
     {
-        $notice = Notice::get();
+        $notice = Notice::all();
 
         if($notice->count() == 0)
         {
@@ -54,8 +55,35 @@ class ReactApiController extends Controller
         }
         $lastFive  =  array_slice($articles, -5);
 
-        return response()->json(['success' => $news,'articles' => $lastFive], 200);
+        return response()->json(['success' => $articles,'articles' => $lastFive], 200);
 
+    }
+
+        public function getPptx(Request $request)
+    {
+
+        $pptx = PPTX::all(); // should be articles
+
+        if (empty($pptx)) {
+
+            return response()->json(['error' => 'No Resource Found!'], 404);
+        }
+
+        foreach($pptx as $pptx_data)
+        {
+            // dd($pptx_data);
+            $pptx_array[] = [
+                    'name' => $pptx_data->name,
+                    'image' =>url('uploads/pptx/'.$pptx_data->path),
+                    'category_id' =>$pptx_data->category_id,
+
+            ];
+
+        }
+
+        $lastFive  =  array_slice($pptx_array, -5);
+
+        return response()->json(['success' => $pptx_array,'articles' => $lastFive], 200);
 
     }
 
@@ -75,7 +103,7 @@ class ReactApiController extends Controller
 
     public function getPages(Request $request)
     {
-        $page = Page::get();
+        $page = Page::all();
 
         if($page->count() == 0)
         {
@@ -89,7 +117,7 @@ class ReactApiController extends Controller
     public function getProjects(Request $request)
     {
 
-        $projects = Project::get();
+        $projects = Project::all();
 
         if($projects ->count() == 0)
         {

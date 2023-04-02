@@ -5,6 +5,13 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\PPTXRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
+use App\Models\PPTX;
+use App\Models\Category;
+use App\Models\User;
+use App\Notifications\NewUserRegisterNotification;
+use App\Models\Funded;
+use Carbon\Carbon;
+use File;
 
 /**
  * Class PPTXCrudController
@@ -13,6 +20,8 @@ use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
  */
 class PPTXCrudController extends CrudController
 {
+    public $module = 'PPTX Uploaded ';
+
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
@@ -52,40 +61,41 @@ class PPTXCrudController extends CrudController
          */
     }
 
-    /**
-     * Define what happens when the Create operation is loaded.
-     *
-     * @see https://backpackforlaravel.com/docs/crud-operation-create
-     * @return void
-     */
-    protected function setupCreateOperation()
+    public function create()
     {
-        CRUD::setValidation(PPTXRequest::class);
+        $category = Category::pluck('name', 'id');
 
-        CRUD::field('category_id');
-        CRUD::field('name');
-        // CRUD::field('path');
-        $this->crud->addField([   // Browse
-    'name'  => 'image',
-    'label' => 'Image',
-    'type'  => 'browse'
-],);
-
-        /**
-         * Fields can be defined using the fluent syntax or array syntax:
-         * - CRUD::field('price')->type('number');
-         * - CRUD::addField(['name' => 'price', 'type' => 'number']));
-         */
+        return view('admin.pptx.create')
+        ->withcategory($category);
     }
 
-    /**
-     * Define what happens when the Update operation is loaded.
-     *
-     * @see https://backpackforlaravel.com/docs/crud-operation-update
-     * @return void
-     */
-    protected function setupUpdateOperation()
+    public function store(PPTXRequest $request)
     {
-        $this->setupCreateOperation();
+        // dd($request->all());
+        $attachments = $request->image;
+        if($attachments != NULL){
+            $destinationPath = public_path() . "/uploads/pptx";
+            $name = $attachments->getClientOriginalName();
+            $fileName = time() . '_' . $name;
+            $fileName = preg_replace('/\s+/', '_', $fileName);
+            $attachments->move($destinationPath, $fileName);
+        }
+        $pptx = new PPTX();
+        $pptx->category_id = $request['category_id'];
+        $pptx->name = $request['name'];
+        $pptx->user_id = backpack_user()->id;
+        $pptx->created_at = Carbon::now();
+        $pptx->path = $fileName ?? NULL;
+        $pptx->save();
+
+        //Notification start
+        $type = 'Uploaded';
+        $notification = User::first();
+        $notification->notify(new NewUserRegisterNotification($pptx, $type, $this->module));
+        //notification end
+
+        \Alert::success('pptx successfully uploded!')->flash();
+
+        return redirect('admin/pptx');
     }
 }

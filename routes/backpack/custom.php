@@ -31,6 +31,10 @@ Route::group([
         Route::crud('funded', 'FundedCrudController');
     });
 
+    Route::crud('pptx', 'PPTXCrudController');
+    Route::post('pptx/store', ['as' => 'admin.pptx.store', 'uses' => 'PPTXCrudController@store']);
+
+
     Route::group(['middleware' => 'acl:Article'], function () {
         Route::crud('article', 'ArticleCrudController');
         Route::post('article/store', ['as' => 'admin.articles.store', 'uses' => 'ArticleCrudController@store']);
@@ -70,6 +74,4 @@ Route::group([
     Route::post('query/{id}/mark-as-read', ['as' => 'admin.query.read', 'uses' => 'QueryCrudController@markAsRead']);
     Route::get('dashboard', ['as' => 'dashboard', 'uses' => 'DashBoardController@dashboard']);
 
-
-    Route::crud('pptx', 'PPTXCrudController');
 });
