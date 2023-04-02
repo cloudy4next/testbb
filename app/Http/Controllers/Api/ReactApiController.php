@@ -129,6 +129,21 @@ class ReactApiController extends Controller
 
     }
 
+        public function getQuery(Request $request)
+    {
+
+        $query = Query::all();
+
+        if($query ->count() == 0)
+        {
+            return response()->json(['error' => 'No Resource Found!'], 404);
+        }
+
+
+        return response()->json(['success' => $query], 200);
+
+    }
+
 
 
     public function postQueries(Request $request)

@@ -25,6 +25,7 @@ Route::get('projects', 'Api\ReactApiController@getProjects');
 Route::get('news', 'Api\ReactApiController@getNews');
 Route::get('articles', 'Api\ReactApiController@getArticles');
 Route::get('pptx', 'Api\ReactApiController@getPptx');
-
 Route::post('query', 'Api\ReactApiController@postQueries');
+Route::get('query-list', 'Api\ReactApiController@getQuery');
+
 // Route::get('Category', 'Api\ReactApiController@getCategory');
