@@ -74,4 +74,5 @@ Route::group([
     Route::post('query/{id}/mark-as-read', ['as' => 'admin.query.read', 'uses' => 'QueryCrudController@markAsRead']);
     Route::get('dashboard', ['as' => 'dashboard', 'uses' => 'DashBoardController@dashboard']);
 
+    Route::crud('research', 'ResearchCrudController');
 });

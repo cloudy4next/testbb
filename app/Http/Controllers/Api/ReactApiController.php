@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\Models\Article;
+use App\Models\Research;
+
 class ReactApiController extends Controller
 {
     public function getCategory(Request $request)
@@ -77,6 +79,9 @@ class ReactApiController extends Controller
                     'name' => $pptx_data->name,
                     'image' =>url('uploads/pptx/'.$pptx_data->path),
                     'category_id' =>$pptx_data->category_id,
+                    'user_id' =>$pptx_data->user_id,
+                    'created_at' =>$pptx_data->created_at,
+
 
             ];
 
@@ -131,6 +136,22 @@ class ReactApiController extends Controller
 
     }
 
+
+
+    public function getResearch(Request $request)
+    {
+
+        $research = Research::all()->toArray();
+
+        if (empty($research)) {
+
+            return response()->json(['error' => 'No Resource Found!'], 404);
+        }
+        $lastFive  =  array_slice($research, -5);
+
+        return response()->json(['success' => $research,'lastFive' => $lastFive], 200);
+
+    }
         public function getQuery(Request $request)
     {
 
@@ -217,5 +238,7 @@ class ReactApiController extends Controller
         return response()->json(['success' => $results], 200);
 
     }
+
+
 
 }

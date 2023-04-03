@@ -19,6 +19,11 @@ class Funded extends Model
         return $this->hasMany('App\Models\Project');
     }
 
+    public function research()
+    {
+        return $this->hasMany('App\Models\Research');
+    }
+
     public function news()
     {
         return $this->hasMany('App\Models\News');

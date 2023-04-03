@@ -20,6 +20,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('categories', 'Api\ReactApiController@getCategory');
 Route::get('pages', 'Api\ReactApiController@getPages');
+Route::get('research', 'Api\ReactApiController@getResearch');
 Route::get('notices', 'Api\ReactApiController@getNotice');
 Route::get('projects', 'Api\ReactApiController@getProjects');
 Route::get('news', 'Api\ReactApiController@getNews');

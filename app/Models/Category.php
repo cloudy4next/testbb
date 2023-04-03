@@ -42,6 +42,11 @@ class Category extends Model
         return $this->hasMany('App\Models\Article');
     }
 
+    public function research()
+    {
+        return $this->hasMany('App\Models\Research');
+    }
+
         public function pptx()
     {
         return $this->hasMany('App\Models\PPTX');

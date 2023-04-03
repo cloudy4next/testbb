@@ -78,3 +78,5 @@
         </ul>
     </li>
 @endif
+
+<li class='nav-item'><a class='nav-link' href='{{ backpack_url('research') }}'><i class='nav-icon la la-question'></i> Research</a></li>
