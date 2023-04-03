@@ -171,6 +171,7 @@ class ReactApiController extends Controller
     public function postQueries(Request $request)
     {
         dd($request->all());
+    #sd
         $validator = Validator::make($request->all(),
         ['name'=> 'required|string|max:255',
         'email'=> 'required|string|email|max:255',
