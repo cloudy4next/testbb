@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\Models\Article;
+use App\Models\Newsletter;
 use App\Models\Research;
 
 class ReactApiController extends Controller
@@ -77,7 +78,8 @@ class ReactApiController extends Controller
         {
             $pptx_array[] = [
                     'name' => $pptx_data->name,
-                    'image' =>url('uploads/pptx/'.$pptx_data->path),
+                    'image' =>'uploads/pptx/cover'.$pptx_data->image,
+                    'pptx' =>'uploads/pptx/pptx'.$pptx_data->pptx,
                     'category_id' =>$pptx_data->category_id,
                     'user_id' =>$pptx_data->user_id,
                     'created_at' =>$pptx_data->created_at,
@@ -151,6 +153,7 @@ class ReactApiController extends Controller
         return response()->json(['success' => $research,'lastFive' => $lastFive], 200);
 
     }
+
         public function getQuery(Request $request)
     {
 
@@ -328,6 +331,27 @@ class ReactApiController extends Controller
 
         return response()->json(['success' => $results], 200);
 
+    }
+
+
+    public function storeNewsletter(Request $request)
+    {
+
+        $validator = Validator::make($request->all(),
+        [
+        'email'=> 'required|string|email|max:255',
+        ]);
+
+        if ($validator->fails())
+        {
+            return response(['errors'=>$validator->errors()->all()], 422);
+        }
+
+        $newsletter = new Newsletter();
+        $newsletter->email = $request->email;
+        $newsletter->save();
+
+        return response()->json(['success' => 'Sucessfully Subscribed!'], 200);
     }
 
 
