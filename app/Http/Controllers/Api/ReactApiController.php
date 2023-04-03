@@ -13,7 +13,8 @@ use App\Models\PPTX;
 use App\Models\Query;
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
-
+use Illuminate\Support\Facades\DB;
+use App\Models\Article;
 class ReactApiController extends Controller
 {
     public function getCategory(Request $request)
@@ -47,7 +48,7 @@ class ReactApiController extends Controller
     public function getArticles(Request $request)
     {
 
-        $articles = News::all()->toArray(); // should be articles
+        $articles = Article::all()->toArray(); // should be articles
 
         if (empty($articles)) {
 
@@ -172,6 +173,47 @@ class ReactApiController extends Controller
         $queryStore->save();
 
         return response()->json(['success' => 'Data Saved Successfully'], 200);
+
+    }
+
+    // getSearch
+
+    public function getSearch(Request $request)
+    {
+    $searchTerm = $request->input('q');
+        // dd($searchTerm);
+        $select_array =['id', 'title', 'description','category_id','user_id','image','status', 'created_at', 'updated_at'];
+
+        $results = DB::table('projects')
+                        ->select($select_array)
+                        ->where('title', 'like', '%'.$searchTerm.'%')
+                        ->union(
+                            DB::table('notices')
+                                ->select($select_array)
+                                ->where('title', 'like', '%'.$searchTerm.'%')
+                        )
+                        ->union(
+                            DB::table('pages')
+                                ->select($select_array)
+                                ->where('title', 'like', '%'.$searchTerm.'%')
+                        )->union(
+                            DB::table('articles')
+                                ->select($select_array)
+                                ->where('title', 'like', '%'.$searchTerm.'%')
+                        )->union(
+                            DB::table('news')
+                                ->select($select_array)
+                                ->where('title', 'like', '%'.$searchTerm.'%')
+                        )
+                        ->orderBy('created_at', 'desc')
+                        ->get();
+
+        if(count($results)== 0)
+        {
+            return response()->json(['error' => 'Nothing Found'], 401);
+        }
+
+        return response()->json(['success' => $results], 200);
 
     }
 
