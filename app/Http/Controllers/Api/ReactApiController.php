@@ -110,7 +110,7 @@ class ReactApiController extends Controller
     public function getPages(Request $request)
     {
         $page = Page::all()->toArray();
-
+        // $view_count
         if (empty($page)) {
 
             return response()->json(['error' => 'No Resource Found!'], 404);
@@ -120,7 +120,6 @@ class ReactApiController extends Controller
         return response()->json(['success' => $page,'lastFive' => $lastFive], 200);
 
     }
-
     public function getProjects(Request $request)
     {
 
@@ -198,7 +197,99 @@ class ReactApiController extends Controller
 
     }
 
-    // getSearch
+
+
+    public function getSinglePage(Request $request)
+    {
+        $page = Page::where('id' ,$request->id)->first();
+        if (empty($page)) {
+
+            return response()->json(['error' => 'No Resource Found!'], 404);
+        }
+        $page->count += 1;
+        $page->save();
+
+        return response()->json(['success' => $page], 200);
+
+    }
+    public function getSingleResearch(Request $request)
+    {
+        $research = Research::where('id' ,$request->id)->first();
+        if (empty($research)) {
+
+            return response()->json(['error' => 'No Resource Found!'], 404);
+        }
+        $research->count += 1;
+        $research->save();
+
+        return response()->json(['success' => $research], 200);
+
+    }
+    public function getSingleNotice(Request $request)
+    {
+        $notice = notice::where('id' ,$request->id)->first();
+        if (empty($notice)) {
+
+            return response()->json(['error' => 'No Resource Found!'], 404);
+        }
+        $notice->count += 1;
+        $notice->save();
+
+        return response()->json(['success' => $notice], 200);
+
+    }
+    public function getSingleProject(Request $request)
+    {
+        $project = Project::where('id' ,$request->id)->first();
+        if (empty($paprojectge)) {
+
+            return response()->json(['error' => 'No Resource Found!'], 404);
+        }
+        $project->count += 1;
+        $project->save();
+
+        return response()->json(['success' => $project], 200);
+
+    }
+    public function getSingleNews(Request $request)
+    {
+        $news = News::where('id' ,$request->id)->first();
+        if (empty($news)) {
+
+            return response()->json(['error' => 'No Resource Found!'], 404);
+        }
+        $news->count += 1;
+        $news->save();
+
+        return response()->json(['success' => $news], 200);
+
+    }
+    public function getSingleAritcle(Request $request)
+    {
+        $article = Article::where('id' ,$request->id)->first();
+        if (empty($article)) {
+
+            return response()->json(['error' => 'No Resource Found!'], 404);
+        }
+        $article->count += 1;
+        $article->save();
+
+        return response()->json(['success' => $article], 200);
+
+    }
+    public function getSinglePptx(Request $request)
+    {
+        $pptx = PPTX::where('id' ,$request->id)->first();
+        if (empty($pptx)) {
+
+            return response()->json(['error' => 'No Resource Found!'], 404);
+        }
+        $pptx->count += 1;
+        $pptx->save();
+
+        return response()->json(['success' => $pptx], 200);
+
+    }
 
     public function getSearch(Request $request)
     {
@@ -238,7 +329,6 @@ class ReactApiController extends Controller
         return response()->json(['success' => $results], 200);
 
     }
-
 
 
 }
