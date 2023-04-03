@@ -34,14 +34,15 @@ class ReactApiController extends Controller
 
     public function getNotice(Request $request)
     {
-        $notice = Notice::all();
+        $notice = Notice::all()->toArray();
 
-        if($notice->count() == 0)
-        {
+        if (empty($notice)) {
+
             return response()->json(['error' => 'No Resource Found!'], 404);
         }
+        $lastFive  =  array_slice($notice, -5);
 
-        return response()->json(['success' => $notice], 200);
+        return response()->json(['success' => $notice,'lastFive' => $lastFive], 200);
 
     }
 
@@ -72,7 +73,6 @@ class ReactApiController extends Controller
 
         foreach($pptx as $pptx_data)
         {
-            // dd($pptx_data);
             $pptx_array[] = [
                     'name' => $pptx_data->name,
                     'image' =>url('uploads/pptx/'.$pptx_data->path),
@@ -104,29 +104,30 @@ class ReactApiController extends Controller
 
     public function getPages(Request $request)
     {
-        $page = Page::all();
+        $page = Page::all()->toArray();
 
-        if($page->count() == 0)
-        {
+        if (empty($page)) {
+
             return response()->json(['error' => 'No Resource Found!'], 404);
         }
+        $lastFive  =  array_slice($page, -5);
 
-        return response()->json(['success' => $page], 200);
+        return response()->json(['success' => $page,'lastFive' => $lastFive], 200);
 
     }
 
     public function getProjects(Request $request)
     {
 
-        $projects = Project::all();
+        $projects = Project::all()->toArray();
 
-        if($projects ->count() == 0)
-        {
+        if (empty($projects)) {
+
             return response()->json(['error' => 'No Resource Found!'], 404);
         }
+        $lastFive  =  array_slice($projects, -5);
 
-
-        return response()->json(['success' => $projects], 200);
+        return response()->json(['success' => $projects,'lastFive' => $lastFive], 200);
 
     }
 
