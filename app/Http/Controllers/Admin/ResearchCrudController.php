@@ -126,7 +126,7 @@ class ResearchCrudController extends CrudController
 
         // CRUD::field('image');
         $this->crud->addField([
-            'label' => "Image",
+            'label' => "Choose Image",
             'name' => "image",
             'type' => 'image',
         ]);

@@ -75,4 +75,10 @@ Route::group([
     Route::get('dashboard', ['as' => 'dashboard', 'uses' => 'DashBoardController@dashboard']);
 
     Route::crud('research', 'ResearchCrudController');
+
+    Route::group(['middleware' => 'acl:Settings'], function () {
+            Route::crud('users', 'UserCrudController');
+
+    });
+
 });

@@ -64,7 +64,7 @@
                         Fundeds</a></li>
             @endif
             @if (backpack_user()->hasRole('Super admin'))
-                <li class="nav-item"><a class="nav-link" href="{{ backpack_url('user') }}"><i
+                <li class="nav-item"><a class="nav-link" href="{{ backpack_url('users') }}"><i
                             class="nav-icon la la-user"></i>
                         <span>Users</span></a></li>
             @endif
