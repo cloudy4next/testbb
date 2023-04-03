@@ -56,7 +56,7 @@ class ReactApiController extends Controller
         }
         $lastFive  =  array_slice($articles, -5);
 
-        return response()->json(['success' => $articles,'articles' => $lastFive], 200);
+        return response()->json(['success' => $articles,'lastFive' => $lastFive], 200);
 
     }
 
@@ -84,7 +84,7 @@ class ReactApiController extends Controller
 
         $lastFive  =  array_slice($pptx_array, -5);
 
-        return response()->json(['success' => $pptx_array,'articles' => $lastFive], 200);
+        return response()->json(['success' => $pptx_array,'lastFive' => $lastFive], 200);
 
     }
 
