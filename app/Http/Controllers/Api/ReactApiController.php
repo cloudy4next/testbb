@@ -174,7 +174,7 @@ class ReactApiController extends Controller
         $validator = Validator::make($request->all(),
         ['name'=> 'required|string|max:255',
         'email'=> 'required|string|email|max:255',
-        'phone'=> 'required|string|max:15',
+        'mobile'=> 'required|string|max:15',
         'title'=> 'required|string|max:255',
         'description'=> 'required|min:3|max:1000',
         ]);
@@ -187,7 +187,7 @@ class ReactApiController extends Controller
         $queryStore = new Query();
         $queryStore->name = $request->name;
         $queryStore->email = $request->email;
-        $queryStore->phone = $request->phone;
+        $queryStore->mobile = $request->mobile;
         $queryStore->title = $request->title;
         $queryStore->description = $request->description;
         $queryStore->created_at = Carbon::now();
