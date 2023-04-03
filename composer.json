@@ -10,8 +10,10 @@
     "require": {
         "php": "^7.3|^8.0",
         "cloudy4next/backupmanager": "^4.1.1",
+        "cloudy4next/crud": "^2.0.0",
         "cloudy4next/filemanager": "4.1.1",
         "cloudy4next/generators": "4.1.1",
+        "cloudy4next/permissionmanager": "1.0.1",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "intervention/image": "^2.7",
@@ -21,9 +23,7 @@
         "laravelcollective/html": "^6.3",
         "mews/purifier": "^3.3",
         "spatie/laravel-activitylog": "^4.7",
-        "spatie/laravel-analytics": "*",
-        "cloudy4next/crud": "^2.0.0",
-        "cloudy4next/permissionmanager": "1.0.1"
+        "spatie/laravel-analytics": "*"
     },
     "repositories": [
         {

@@ -124,8 +124,12 @@ class ResearchCrudController extends CrudController
                 'type'  => 'easymde',
             ]);
 
-        CRUD::field('image');
-
+        // CRUD::field('image');
+        $this->crud->addField([
+            'label' => "Image",
+            'name' => "image",
+            'type' => 'image',
+        ]);
         /**
          * Fields can be defined using the fluent syntax or array syntax:
          * - CRUD::field('price')->type('number');
