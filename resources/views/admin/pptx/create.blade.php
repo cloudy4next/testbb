@@ -60,7 +60,8 @@
                             @endif
                         </div>
                         <div class="form-group col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3">
-                            <label for="upload" class="form-label">Upload</label> <span class="text-danger">*</span>
+                            <label for="cover_image" class="form-label">Cover Image</label> <span
+                                class="text-danger">*</span>
                             {!! Form::file('image', [
                                 'class' => 'form-control image',
                                 'id' => 'image',
@@ -74,6 +75,25 @@
                             @endif
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="form-group col-12 col-sm-12 col-md-3 col-lg-3 col-xl-6">
+                            <label for="pptx_file" class="form-label">Presentation File</label> <span
+                                class="text-danger">*</span>
+                            {!! Form::file('pptx', [
+                                'class' => 'form-control pptx',
+                                'id' => 'ptx',
+                                'rows' => '2',
+                                'placeholder' => 'Upload pptx',
+                                'tabindex' => 5,
+                                'required' => 'required',
+                            ]) !!}
+                            @if ($errors->has('pptx'))
+                                <span class="text-danger"><strong>{{ $errors->first('pptx') }}</strong></span>
+                            @endif
+                        </div>
+
+                    </div>
+
                 </div>
                 <div class="card-footer">
                     <button type="submit" class="btn btn-success question-set-submit">

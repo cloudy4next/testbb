@@ -13,7 +13,7 @@ class PPTX extends Model
     use HasFactory;
     use LogsActivity;
 
-    protected $fillable = ['name','path'];
+    protected $fillable = ['name','image','pptx'];
 
 
     public function category() {

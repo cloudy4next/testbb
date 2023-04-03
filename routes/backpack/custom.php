@@ -81,4 +81,5 @@ Route::group([
 
     });
 
+    Route::crud('newsletter', 'NewsletterCrudController');
 });

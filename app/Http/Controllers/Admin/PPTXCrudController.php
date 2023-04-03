@@ -48,11 +48,13 @@ class PPTXCrudController extends CrudController
      */
     protected function setupListOperation()
     {
+
+        $this->crud->denyAccess(['edit','show','update']);
         CRUD::column('category_id');
         CRUD::column('name');
-        CRUD::column('path');
-        // CRUD::column('created_at');
-        // CRUD::column('updated_at');
+        CRUD::column('image');
+        CRUD::column('pptx');
+        // CRUD::column('image');
 
         /**
          * Columns can be defined using the fluent syntax or array syntax:
@@ -69,23 +71,34 @@ class PPTXCrudController extends CrudController
         ->withcategory($category);
     }
 
-    public function store(PPTXRequest $request)
+    public function storeService($attachments,$path)
     {
-        // dd($request->all());
-        $attachments = $request->image;
         if($attachments != NULL){
-            $destinationPath = public_path() . "/uploads/pptx";
+            $destinationPath = public_path() . "/uploads/pptx/". $path;
             $name = $attachments->getClientOriginalName();
             $fileName = time() . '_' . $name;
             $fileName = preg_replace('/\s+/', '_', $fileName);
             $attachments->move($destinationPath, $fileName);
         }
+        return $fileName ;
+    }
+
+
+    public function store(PPTXRequest $request)
+    {
+        // dd($request->all());
+
+        $image_filename = $this->storeService($request->image,'cover');
+        $pptx_filename = $this->storeService($request->pptx,'file');
+
         $pptx = new PPTX();
         $pptx->category_id = $request['category_id'];
         $pptx->name = $request['name'];
         $pptx->user_id = backpack_user()->id;
         $pptx->created_at = Carbon::now();
-        $pptx->path = $fileName ?? NULL;
+        $pptx->image = $image_filename ?? NULL;
+        $pptx->pptx = $pptx_filename ?? NULL;
+
         $pptx->save();
 
         //Notification start
