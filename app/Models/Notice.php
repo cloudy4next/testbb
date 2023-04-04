@@ -14,7 +14,7 @@ class Notice extends Model
 
     protected $fillable = ['user_id','funded_id','category_id', 'title', 'image', 'description'];
 
-    protected $hidden = ['id'];
+    // protected $hidden = ['id'];
 
     public function user() {
 

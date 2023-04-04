@@ -15,7 +15,7 @@ class Research extends Model
     protected $fillable = ['user_id','author','funded_id','category_id', 'title', 'image', 'description'];
 
 
-    protected $hidden = ['id'];
+    // protected $hidden = ['id'];
 
     public function user() {
 
