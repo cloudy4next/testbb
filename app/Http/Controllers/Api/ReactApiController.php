@@ -37,13 +37,13 @@ class ReactApiController extends Controller
 
     public function getNotice(Request $request)
     {
-        $notice = Notice::all()->toArray();
+        $notice = Notice::orderBy('id', 'desc')->get()->toArray();
 
         if (empty($notice)) {
 
             return response()->json(['error' => 'No Resource Found!'], 404);
         }
-        $lastFive  =  array_slice($notice, -5);
+        $lastFive  =  array_slice($notice,0, 5, true);
 
         return response()->json(['success' => $notice,'lastFive' => $lastFive], 200);
 
@@ -52,13 +52,13 @@ class ReactApiController extends Controller
     public function getArticles(Request $request)
     {
 
-        $articles = Article::all()->toArray(); // should be articles
+        $articles = Article::orderBy('id', 'desc')->get()->toArray(); // should be articles
 
         if (empty($articles)) {
 
             return response()->json(['error' => 'No Resource Found!'], 404);
         }
-        $lastFive  =  array_slice($articles, -5);
+        $lastFive  =  array_slice($articles,0, 5, true);
 
         return response()->json(['success' => $articles,'lastFive' => $lastFive], 200);
 
@@ -67,9 +67,9 @@ class ReactApiController extends Controller
         public function getPptx(Request $request)
     {
         $pptx_array =[];
-        $pptx = PPTX::all(); // should be articles
+        $pptx = PPTX::orderBy('id', 'desc')->get()->toArray(); // should be articles
 
-        if ($pptx->count()==0) {
+        if (empty($pptx)){
 
             return response()->json(['error' => 'No Resource Found!'], 404);
         }
@@ -77,19 +77,20 @@ class ReactApiController extends Controller
         foreach($pptx as $pptx_data)
         {
             $pptx_array[] = [
-                    'name' => $pptx_data->name,
-                    'image' =>'uploads/pptx/cover'.$pptx_data->image,
-                    'pptx' =>'uploads/pptx/pptx'.$pptx_data->pptx,
-                    'category_id' =>$pptx_data->category_id,
-                    'user_id' =>$pptx_data->user_id,
-                    'created_at' =>$pptx_data->created_at,
+                    'id' =>$pptx_data['id'],
+                    'title' => $pptx_data['name'],
+                    'image' =>'uploads/pptx/cover'. $pptx_data['image'],
+                    'pptx' =>'uploads/pptx/pptx'. $pptx_data['pptx'],
+                    'category_id' => $pptx_data['category_id'],
+                    'user_id' => $pptx_data['user_id'],
+                    'created_at' => $pptx_data['created_at'],
 
 
             ];
 
         }
 
-        $lastFive  =  array_slice($pptx_array, -5);
+        $lastFive  =  array_slice($pptx_array,0, 5, true);
 
         return response()->json(['success' => $pptx_array,'lastFive' => $lastFive], 200);
 
@@ -97,13 +98,13 @@ class ReactApiController extends Controller
 
     public function getNews(Request $request)
     {
-        $news = News::all()->toArray();
+        $news = News::orderBy('id', 'desc')->get()->toArray();
 
         if (empty($news)) {
 
             return response()->json(['error' => 'No Resource Found!'], 404);
         }
-        $lastFive  =  array_slice($news, -5);
+        $lastFive  =  array_slice($news,0, 5, true);
 
         return response()->json(['success' => $news,'lastFive' => $lastFive], 200);
 
@@ -111,13 +112,13 @@ class ReactApiController extends Controller
 
     public function getPages(Request $request)
     {
-        $page = Page::all()->toArray();
+        $page = Page::orderBy('id', 'desc')->get()->toArray();
         // $view_count
         if (empty($page)) {
 
             return response()->json(['error' => 'No Resource Found!'], 404);
         }
-        $lastFive  =  array_slice($page, -5);
+        $lastFive  =  array_slice($page,0, 5, true);
 
         return response()->json(['success' => $page,'lastFive' => $lastFive], 200);
 
@@ -125,13 +126,13 @@ class ReactApiController extends Controller
     public function getProjects(Request $request)
     {
 
-        $projects = Project::all()->toArray();
+        $projects = Project::orderBy('id', 'desc')->get()->toArray();
 
         if (empty($projects)) {
 
             return response()->json(['error' => 'No Resource Found!'], 404);
         }
-        $lastFive  =  array_slice($projects, -5);
+        $lastFive  =  array_slice($projects,0, 5, true);
 
         return response()->json(['success' => $projects,'lastFive' => $lastFive], 200);
 
@@ -142,13 +143,13 @@ class ReactApiController extends Controller
     public function getResearch(Request $request)
     {
 
-        $research = Research::all()->toArray();
+        $research = Research::orderBy('id', 'desc')->get()->toArray();
 
         if (empty($research)) {
 
             return response()->json(['error' => 'No Resource Found!'], 404);
         }
-        $lastFive  =  array_slice($research, -5);
+        $lastFive  =  array_slice($research,0, 5, true);
 
         return response()->json(['success' => $research,'lastFive' => $lastFive], 200);
 
