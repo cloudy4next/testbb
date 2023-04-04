@@ -105,7 +105,7 @@ class ProjectCrudController extends CrudController
         // dd($request->funded_id);
         $attachments = $request->image;
         if ($attachments != NULL) {
-            $destinationPath = public_path() . "/uploads/project";
+            $destinationPath = public_path() . "/uploads/projects";
             $name = $attachments->getClientOriginalName();
             $fileName = time() . '_' . $name;
             $fileName = preg_replace('/\s+/', '_', $fileName);

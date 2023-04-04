@@ -114,7 +114,7 @@ class NoticeCrudController extends CrudController
    {
     $attachments = $request->image;
     if($attachments != NULL){
-        $destinationPath = public_path() . "/uploads/notice";
+        $destinationPath = public_path() . "/uploads/notices";
         $name = $attachments->getClientOriginalName();
         $fileName = time() . '_' . $name;
         $fileName = preg_replace('/\s+/', '_', $fileName);
