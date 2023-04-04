@@ -79,8 +79,8 @@ class ReactApiController extends Controller
             $pptx_array[] = [
                     'id' =>$pptx_data['id'],
                     'title' => $pptx_data['name'],
-                    'image' =>'uploads/pptx/cover'. $pptx_data['image'],
-                    'pptx' =>'uploads/pptx/pptx'. $pptx_data['pptx'],
+                    'image' =>'/cover'. $pptx_data['image'],
+                    'pptx' =>'/pptx'. $pptx_data['pptx'],
                     'category_id' => $pptx_data['category_id'],
                     'user_id' => $pptx_data['user_id'],
                     'created_at' => $pptx_data['created_at'],
@@ -144,14 +144,34 @@ class ReactApiController extends Controller
     {
 
         $research = Research::orderBy('id', 'desc')->get()->toArray();
+        $removePath = [];
 
-        if (empty($research)) {
+        foreach ($research as $key) {
+            $tokens = explode('//', $key['image']);
+            $img = trim(end($tokens));
+            $removePath [] = [
+
+                "id"=> $key["id"],
+                "count"=>$key["count"],
+                "user_id"=> $key["user_id"],
+                "category_id"=> $key["category_id"],
+                "funded_id"=> $key["funded_id"],
+                "title"=> $key["title"],
+                "description"=>$key["description"],
+                "image"=>$img,
+                "author"=> $key["author"],
+                "status"=> $key["status"],
+                "created_at"=> $key["created_at"],
+                "updated_at"=> $key["updated_at"],
+            ];
+        }
+        if (empty($removePath)) {
 
             return response()->json(['error' => 'No Resource Found!'], 404);
         }
-        $lastFive  =  array_slice($research,0, 5, true);
+        $lastFive  =  array_slice($removePath,0, 5, true);
 
-        return response()->json(['success' => $research,'lastFive' => $lastFive], 200);
+        return response()->json(['success' => $removePath,'lastFive' => $lastFive], 200);
 
     }
 
