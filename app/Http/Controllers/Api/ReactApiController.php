@@ -245,7 +245,7 @@ class ReactApiController extends Controller
     public function getSingleProject(Request $request)
     {
         $project = Project::where('id' ,$request->id)->first();
-        if (empty($paprojectge)) {
+        if (empty($project)) {
 
             return response()->json(['error' => 'No Resource Found!'], 404);
         }
