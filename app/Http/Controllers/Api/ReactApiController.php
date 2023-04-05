@@ -363,7 +363,7 @@ class ReactApiController extends Controller
     {
     $searchTerm = $request->input('q');
         // dd($searchTerm);
-        $select_array =['id', 'title', 'description','category_id','user_id','image','status', 'created_at', 'updated_at'];
+        $select_array =['title', 'description','category_id','user_id','image', 'created_at'];
 
         $results = DB::table('projects')
                         ->select($select_array)
@@ -387,11 +387,20 @@ class ReactApiController extends Controller
                                 ->where('title', 'like', '%'.$searchTerm.'%')
                         )
                         ->orderBy('created_at', 'desc')
-                        ->get();
+                        ->get()->toArray();
 
-        if(count($results)== 0)
+        if(empty($results))
         {
             return response()->json(['error' => 'Nothing Found'], 401);
+        }
+
+        $count = 0;
+        // dd($results);
+        foreach($results as $result)
+        {
+            $result->id = $count + 1;
+
+            $count++;
         }
 
         return response()->json(['success' => $results], 200);
