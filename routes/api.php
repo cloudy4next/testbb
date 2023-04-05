@@ -27,6 +27,8 @@ Route::get('projects', 'Api\ReactApiController@getProjects');
 Route::get('news', 'Api\ReactApiController@getNews');
 Route::get('articles', 'Api\ReactApiController@getArticles');
 Route::get('pptx', 'Api\ReactApiController@getPptx');
+Route::get('faq', 'Api\ReactApiController@getFaq');
+
 
 Route::get('pages/{id}', 'Api\ReactApiController@getSinglePage');
 Route::get('research/{id}', 'Api\ReactApiController@getSingleResearch');

@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\Models\Article;
+use App\Models\Faq;
 use App\Models\Newsletter;
 use App\Models\Research;
 
@@ -31,6 +32,20 @@ class ReactApiController extends Controller
         }
 
         return response()->json(['success' => $categories], 200);
+
+
+    }
+        public function getFaq(Request $request)
+    {
+        $faq = Faq::with('children')->get();
+
+
+        if($faq->count() == 0)
+        {
+            return response()->json(['error' => 'No Resource Found!'], 404);
+        }
+
+        return response()->json(['success' => $faq], 200);
 
 
     }
