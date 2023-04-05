@@ -78,9 +78,10 @@ class ReactApiController extends Controller
         {
             $pptx_array[] = [
                     'id' =>$pptx_data['id'],
+                    'id' =>$pptx_data['count'],
                     'title' => $pptx_data['name'],
-                    'image' =>'/cover'. $pptx_data['image'],
-                    'pptx' =>'/pptx'. $pptx_data['pptx'],
+                    'image' =>'/cover/'. $pptx_data['image'],
+                    'pptx' =>'/pptx/'. $pptx_data['pptx'],
                     'category_id' => $pptx_data['category_id'],
                     'user_id' => $pptx_data['user_id'],
                     'created_at' => $pptx_data['created_at'],
