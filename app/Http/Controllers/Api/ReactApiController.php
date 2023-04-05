@@ -246,7 +246,24 @@ class ReactApiController extends Controller
         $research->count += 1;
         $research->save();
 
-        return response()->json(['success' => $research], 200);
+        $tokens = explode('//', $research->image);
+        $img = trim(end($tokens));
+
+        $removePath [] = [
+                "id"=> $research->id,
+                "count"=>$research->count,
+                "user_id"=> $research->user_id,
+                "category_id"=> $research->category_id,
+                "funded_id"=> $research->funded_id,
+                "title"=> $research->title,
+                "description"=>$research["description"],
+                "image"=>$img,
+                "author"=> $research->author,
+                "status"=> $research->status,
+                "created_at"=> $research->created_at,
+            ];
+
+        return response()->json(['success' => $removePath], 200);
 
     }
     public function getSingleNotice(Request $request)
@@ -311,7 +328,18 @@ class ReactApiController extends Controller
         $pptx->count += 1;
         $pptx->save();
 
-        return response()->json(['success' => $pptx], 200);
+        $change_name_to_title =[
+            "id"=> $pptx->id,
+            "count"=> $pptx-> count,
+            "user_id"=> $pptx->user_id,
+            "category_id"=> $pptx->category_id,
+            "title"=> $pptx->name,
+            "image"=> $pptx->image,
+            "created_at"=> $pptx->created_at,
+            "pptx"=> $pptx->pptx,
+        ];
+
+        return response()->json(['success' => $change_name_to_title], 200);
 
     }
 
