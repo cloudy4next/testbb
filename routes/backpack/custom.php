@@ -78,8 +78,11 @@ Route::group([
 
     Route::group(['middleware' => 'acl:Settings'], function () {
             Route::crud('users', 'UserCrudController');
+            Route::crud('newsletter', 'NewsletterCrudController');
+            Route::crud('faq', 'FaqCrudController');
+
 
     });
 
-    Route::crud('newsletter', 'NewsletterCrudController');
+
 });

@@ -84,8 +84,13 @@
                         <span>Activity Log</span></a></li>
             @endif
 
+            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('newsletter') }}'><i
+                        class='nav-icon la la-question'></i> Newsletters</a></li>
+
+            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('faq') }}'><i
+                        class='nav-icon la la-question'></i>
+                    Faqs</a></li>
+
         </ul>
     </li>
 @endif
-
-<li class='nav-item'><a class='nav-link' href='{{ backpack_url('newsletter') }}'><i class='nav-icon la la-question'></i> Newsletters</a></li>

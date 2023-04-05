@@ -250,7 +250,7 @@ class ReactApiController extends Controller
         $tokens = explode('//', $research->image);
         $img = trim(end($tokens));
 
-        $removePath [] = [
+        $removePath = [
                 "id"=> $research->id,
                 "count"=>$research->count,
                 "user_id"=> $research->user_id,
