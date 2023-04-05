@@ -37,7 +37,7 @@ class ReactApiController extends Controller
     }
         public function getFaq(Request $request)
     {
-        $faq = Faq::with('children')->get();
+        $faq = Faq::all();
 
 
         if($faq->count() == 0)
