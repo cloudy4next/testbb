@@ -95,8 +95,8 @@ class ReactApiController extends Controller
                     'id' =>$pptx_data['id'],
                     'count' =>$pptx_data['count'],
                     'title' => $pptx_data['name'],
-                    'image' =>'/cover/'. $pptx_data['image'],
-                    'pptx' =>'/pptx/'. $pptx_data['pptx'],
+                    'image' =>'cover/'. $pptx_data['image'],
+                    'pptx' =>'pptx/'. $pptx_data['pptx'],
                     'category_id' => $pptx_data['category_id'],
                     'user_id' => $pptx_data['user_id'],
                     'created_at' => $pptx_data['created_at'],
@@ -350,9 +350,9 @@ class ReactApiController extends Controller
             "user_id"=> $pptx->user_id,
             "category_id"=> $pptx->category_id,
             "title"=> $pptx->name,
-            "image"=> $pptx->image,
+            "image"=> 'cover/'. $pptx->image,
             "created_at"=> $pptx->created_at,
-            "pptx"=> $pptx->pptx,
+            "pptx"=> 'pptx/'. $pptx->pptx,
         ];
 
         return response()->json(['success' => $change_name_to_title], 200);
