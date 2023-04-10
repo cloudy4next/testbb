@@ -89,7 +89,7 @@ class PPTXCrudController extends CrudController
         // dd($request->all());
 
         $image_filename = $this->storeService($request->image,'cover');
-        $pptx_filename = $this->storeService($request->pptx,'file');
+        $pptx_filename = $this->storeService($request->pptx,'pptx');
 
         $pptx = new PPTX();
         $pptx->category_id = $request['category_id'];
