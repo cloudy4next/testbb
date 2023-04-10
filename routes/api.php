@@ -41,7 +41,7 @@ Route::get('pptx/{id}', 'Api\ReactApiController@getSinglePptx');
 
 Route::post('query', 'Api\ReactApiController@postQueries');
 Route::get('query-list', 'Api\ReactApiController@getQuery');
-Route::get('search', 'Api\ReactApiController@getSearch');
+Route::post('search', 'Api\ReactApiController@getSearch');
 Route::post('newsletter', 'Api\ReactApiController@storeNewsletter');
 
 // Route::get('Category', 'Api\ReactApiController@getCategory');

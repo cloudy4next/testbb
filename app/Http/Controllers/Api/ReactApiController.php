@@ -361,31 +361,40 @@ class ReactApiController extends Controller
 
     public function getSearch(Request $request)
     {
+        // dd($request->all());
     $searchTerm = $request->input('q');
-        // dd($searchTerm);
         $select_array =['title', 'description','category_id','user_id','image', 'created_at'];
 
         $results = DB::table('projects')
-                        ->select($select_array)
                         ->where('title', 'like', '%'.$searchTerm.'%')
+                        ->select($select_array)
+
                         ->union(
                             DB::table('notices')
-                                ->select($select_array)
                                 ->where('title', 'like', '%'.$searchTerm.'%')
-                        )
+                                ->select($select_array)
+                                )
                         ->union(
                             DB::table('pages')
-                                ->select($select_array)
                                 ->where('title', 'like', '%'.$searchTerm.'%')
-                        )->union(
+                                ->select($select_array)
+
+                                )->union(
                             DB::table('articles')
+                        ->where('title', 'like', '%'.$searchTerm.'%')
                                 ->select($select_array)
-                                ->where('title', 'like', '%'.$searchTerm.'%')
-                        )->union(
+
+                                )->union(
                             DB::table('news')
-                                ->select($select_array)
                                 ->where('title', 'like', '%'.$searchTerm.'%')
-                        )
+                                ->select($select_array)
+
+                                )->union(
+                            DB::table('research')
+                                ->where('title', 'like', '%'.$searchTerm.'%')
+                                ->select($select_array)
+
+                                )
                         ->orderBy('created_at', 'desc')
                         ->get()->toArray();
 
