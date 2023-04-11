@@ -99,7 +99,7 @@
                                 }
                             @endphp
                             {{-- {{ $data->image }} --}}
-                            <div> <a href="{{ URL::to('/uploads/page/' . $data->image) }}" download>
+                            <div> <a href="{{ URL::to('/uploads/pages/' . $data->image) }}" download>
                                     {{ $data->image }} </a>
                             </div>
                         </div>
