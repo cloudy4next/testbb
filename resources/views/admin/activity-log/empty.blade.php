@@ -29,7 +29,7 @@
     <div class="card p-4">
         <div class="row">
             <div class="col-md-10">
-                <h1>No Farmer data available</h1>
+                <h1>No data available</h1>
             </div>
         </div>
     </div>
