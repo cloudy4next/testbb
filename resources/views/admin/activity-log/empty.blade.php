@@ -1,6 +1,6 @@
 @extends('admin.layout.master', [
     'breadcrumb' => [
-        'Face Match Exam list' => false,
+        'Activity Log' => false,
     ],
 ])
 
