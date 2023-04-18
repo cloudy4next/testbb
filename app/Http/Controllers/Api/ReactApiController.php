@@ -361,8 +361,7 @@ class ReactApiController extends Controller
 
     public function getSearch(Request $request)
     {
-        // dd($request->all());
-    $searchTerm = $request->input('q');
+        $searchTerm = $request->get('q');
         $select_array =['title', 'description','category_id','user_id','image', 'created_at'];
 
         $results = DB::table('projects')
