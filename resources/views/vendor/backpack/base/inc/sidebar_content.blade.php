@@ -2,6 +2,14 @@
 <li class="nav-item"><a class="nav-link" href="{{ backpack_url('dashboard') }}"><i class="la la-home nav-icon"></i>
         {{ trans('backpack::base.dashboard') }}</a></li>
 
+@if (backpack_user()->hasPermissionTo('Settings'))
+    <li class='nav-item'><a class='nav-link' href='{{ backpack_url('slider') }}'><i class='nav-icon la la-question'></i>
+            Sliders</a></li>
+    <li class='nav-item'><a class='nav-link' href='{{ backpack_url('publishnews') }}'><i
+                class='nav-icon la la-question'></i>
+            PublishNews</a></li>
+@endif
+
 
 @if (backpack_user()->hasPermissionTo('Page'))
     <li class='nav-item'><a class='nav-link' href='{{ backpack_url('page') }}'><i class='nav-icon las la-file'></i>
@@ -94,6 +102,3 @@
         </ul>
     </li>
 @endif
-
-<li class='nav-item'><a class='nav-link' href='{{ backpack_url('slider') }}'><i class='nav-icon la la-question'></i> Sliders</a></li>
-<li class='nav-item'><a class='nav-link' href='{{ backpack_url('publishnews') }}'><i class='nav-icon la la-question'></i> PublishNews</a></li>
