@@ -17,7 +17,9 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Article;
 use App\Models\Faq;
 use App\Models\Newsletter;
+use App\Models\PublishNews;
 use App\Models\Research;
+use App\Models\Slider;
 
 class ReactApiController extends Controller
 {
@@ -61,6 +63,31 @@ class ReactApiController extends Controller
         $lastFive  =  array_slice($notice,0, 5, true);
 
         return response()->json(['success' => $notice,'lastFive' => $lastFive], 200);
+
+    }
+
+        public function getSlider(Request $request)
+    {
+        $slider = Slider::orderBy('id', 'desc')->where('status','1')->get()->toArray();
+
+        if (empty($slider)) {
+
+            return response()->json(['error' => 'No Resource Found!'], 404);
+        }
+
+        return response()->json(['success' => $slider], 200);
+
+    }
+        public function getPublishnews(Request $request)
+    {
+        $publish_news = PublishNews::orderBy('id', 'desc')->where('status','1')->get()->toArray();
+
+        if (empty($publish_news)) {
+
+            return response()->json(['error' => 'No Resource Found!'], 404);
+        }
+
+        return response()->json(['success' => $publish_news], 200);
 
     }
 

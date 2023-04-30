@@ -94,3 +94,6 @@
         </ul>
     </li>
 @endif
+
+<li class='nav-item'><a class='nav-link' href='{{ backpack_url('slider') }}'><i class='nav-icon la la-question'></i> Sliders</a></li>
+<li class='nav-item'><a class='nav-link' href='{{ backpack_url('publishnews') }}'><i class='nav-icon la la-question'></i> PublishNews</a></li>

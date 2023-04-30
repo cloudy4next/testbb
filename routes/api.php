@@ -28,6 +28,9 @@ Route::get('news', 'Api\ReactApiController@getNews');
 Route::get('articles', 'Api\ReactApiController@getArticles');
 Route::get('pptx', 'Api\ReactApiController@getPptx');
 Route::get('faq', 'Api\ReactApiController@getFaq');
+Route::get('slider', 'Api\ReactApiController@getSlider');
+Route::get('publishnews', 'Api\ReactApiController@getPublishnews');
+
 
 
 Route::get('pages/{id}', 'Api\ReactApiController@getSinglePage');

@@ -85,4 +85,6 @@ Route::group([
     });
 
 
+    Route::crud('slider', 'SliderCrudController');
+    Route::crud('publishnews', 'PublishNewsCrudController');
 });
