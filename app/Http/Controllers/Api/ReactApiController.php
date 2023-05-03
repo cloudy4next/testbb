@@ -124,7 +124,7 @@ class ReactApiController extends Controller
                     'count' =>$pptx_data['count'],
                     'title' => $pptx_data['name'],
                     'image' =>'cover/'. $pptx_data['image'],
-                    'pptx' =>'pptx/'. $pptx_data['pptx'],
+                    'pptx' =>  $pptx_data['pptx'],
                     'category_id' => $pptx_data['category_id'],
                     'user_id' => $pptx_data['user_id'],
                     'created_at' => $pptx_data['created_at'],

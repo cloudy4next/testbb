@@ -24,7 +24,7 @@ use FFMpeg\Filters\Video\ResizeFilter;
  */
 class PPTXCrudController extends CrudController
 {
-    public $module = 'PPTX Uploaded ';
+    public $module = 'E-Learning Uploaded ';
 
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
@@ -41,7 +41,7 @@ class PPTXCrudController extends CrudController
     {
         CRUD::setModel(\App\Models\PPTX::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/pptx');
-        CRUD::setEntityNameStrings('pptx', 'PPTX');
+        CRUD::setEntityNameStrings('e-learning', 'E-Learning');
     }
 
     /**
