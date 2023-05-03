@@ -12,7 +12,11 @@ use App\Notifications\NewUserRegisterNotification;
 use App\Models\Funded;
 use Carbon\Carbon;
 use File;
-
+use FFMpeg\FFMpeg;
+use FFMpeg\Format\Video\X264;
+use FFMpeg\Coordinate\Dimension;
+use FFMpeg\Media\Video;
+use FFMpeg\Filters\Video\ResizeFilter;
 /**
  * Class PPTXCrudController
  * @package App\Http\Controllers\Admin
@@ -86,10 +90,20 @@ class PPTXCrudController extends CrudController
 
     public function store(PPTXRequest $request)
     {
-        // dd($request->all());
-
         $image_filename = $this->storeService($request->image,'cover');
-        $pptx_filename = $this->storeService($request->pptx,'pptx');
+
+        $file = $request->file('pptx');
+        // dd($file);
+        if ($file->getClientOriginalExtension() === 'mp4' || $file->getClientOriginalExtension() === 'avi' || $file->getClientOriginalExtension() === 'mov') {
+
+            $pptx_filename = $this->optimize($file);
+
+        } else {
+
+            $pptx_filename = $this->storeService($request->pptx,'pptx');
+        }
+
+
 
         $pptx = new PPTX();
         $pptx->category_id = $request['category_id'];
@@ -107,8 +121,32 @@ class PPTXCrudController extends CrudController
         $notification->notify(new NewUserRegisterNotification($pptx, $type, $this->module));
         //notification end
 
-        \Alert::success('pptx successfully uploded!')->flash();
+        \Alert::success('File successfully uploded!')->flash();
 
         return redirect('admin/pptx');
+    }
+
+        public function optimize($video)
+    {
+        $ffmpeg = FFMpeg::create();
+
+        $videoFile = $ffmpeg->open($video->getRealPath());
+
+        $dimension = new Dimension(426, 240);
+        $resizeFilter = new ResizeFilter($dimension, null, ResizeFilter::RESIZEMODE_INSET);
+        $videoFile->addFilter($resizeFilter);
+
+        $format = new X264('aac');
+        $format->setKiloBitrate(500);
+
+        $name = $video->getClientOriginalName();
+        $fileName = time() . '_' . $name;
+        $fileName = preg_replace('/\s+/', '_', $fileName);
+
+
+        $outputFile = public_path("/uploads/pptx/pptx/" . $fileName);
+        $videoFile->save($format, $outputFile);
+
+        return $fileName;
     }
 }

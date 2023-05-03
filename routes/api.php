@@ -40,6 +40,7 @@ Route::get('projects/{id}', 'Api\ReactApiController@getSingleProject');
 Route::get('news/{id}', 'Api\ReactApiController@getSingleNews');
 Route::get('articles/{id}', 'Api\ReactApiController@getSingleAritcle');
 Route::get('pptx/{id}', 'Api\ReactApiController@getSinglePptx');
+Route::get('video/{filename}', 'Api\ReactApiController@getVideo');
 
 
 // Route::post('query', 'Api\ReactApiController@postQueries');

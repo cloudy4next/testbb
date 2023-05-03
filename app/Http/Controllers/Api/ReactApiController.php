@@ -20,7 +20,8 @@ use App\Models\Newsletter;
 use App\Models\PublishNews;
 use App\Models\Research;
 use App\Models\Slider;
-
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Response;
 class ReactApiController extends Controller
 {
     public function getCategory(Request $request)
@@ -361,6 +362,9 @@ class ReactApiController extends Controller
         return response()->json(['success' => $article], 200);
 
     }
+
+    //both pptx, pdf and video file are allowed
+
     public function getSinglePptx(Request $request)
     {
         $pptx = PPTX::where('id' ,$request->id)->first();
@@ -379,11 +383,38 @@ class ReactApiController extends Controller
             "title"=> $pptx->name,
             "image"=> 'cover/'. $pptx->image,
             "created_at"=> $pptx->created_at,
-            "pptx"=> 'pptx/'. $pptx->pptx,
+            "pptx"=>  $pptx->pptx,
         ];
 
         return response()->json(['success' => $change_name_to_title], 200);
 
+    }
+
+
+
+    public function getVideo(Request $request)
+    {
+        // dd($request->filename);
+        $chunkSize = 1024 * 1024; // 1 MB
+
+        $file = Storage::disk('uploads')->get('/pptx/pptx/' . $request->filename);
+        // dd($file);
+        $fileSize = strlen($file);
+
+
+        Response::stream(function () use ($file, $chunkSize) {
+            $pos = 0;
+            $bytesSent = 0;
+            while ($pos < strlen($file)) {
+                $chunk = substr($file, $pos, $chunkSize);
+                $chunkSizeSent = strlen($chunk);
+                echo dechex($chunkSizeSent) . "\r\n";
+                echo $chunk . "\r\n";
+                $pos += $chunkSizeSent;
+                $bytesSent += $chunkSizeSent;
+            }
+            echo "0\r\n\r\n";
+        }, 200,)->send();
     }
 
     public function getSearch(Request $request)
@@ -462,6 +493,9 @@ class ReactApiController extends Controller
 
         return response()->json(['success' => 'Sucessfully Subscribed!'], 200);
     }
+
+
+
 
 
 }
