@@ -1,7 +1,7 @@
 @extends('admin.layout.master', [
 'breadcrumb' => [
-{{-- 'pptx' => route('admin.pptx'), --}}
-'pptx add' => false,
+{{-- 'e-learning' => route('admin.pptx'), --}}
+'e-learning add' => false,
 ]
 ])
 
@@ -21,7 +21,7 @@
                     'enctype' => 'multipart/form-data',
                 ]) !!}
                 <div class="card-header">
-                    <i class="la la-plus"></i> Create pptx
+                    <i class="la la-plus"></i> Create E-Learning
                 </div>
                 <div class="card-body">
                     <div class="row">
