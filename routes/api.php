@@ -27,10 +27,9 @@ Route::get('projects', 'Api\ReactApiController@getProjects');
 Route::get('news', 'Api\ReactApiController@getNews');
 Route::get('articles', 'Api\ReactApiController@getArticles');
 Route::get('pptx', 'Api\ReactApiController@getPptx');
-Route::get('faq', 'Api\ReactApiController@getFaq');
 Route::get('slider', 'Api\ReactApiController@getSlider');
 Route::get('publishnews', 'Api\ReactApiController@getPublishnews');
-
+Route::get('/search', 'Api\ReactApiController@getSearch');
 
 
 Route::get('pages/{id}', 'Api\ReactApiController@getSinglePage');
@@ -43,10 +42,11 @@ Route::get('pptx/{id}', 'Api\ReactApiController@getSinglePptx');
 Route::get('video/{filename}', 'Api\ReactApiController@getVideo');
 
 
-// Route::post('query', 'Api\ReactApiController@postQueries');
-Route::get('query-list', 'Api\ReactApiController@getQuery');
-Route::get('/search', 'Api\ReactApiController@getSearch');
+
+
+
 // Route::post('newsletter', 'Api\ReactApiController@storeNewsletter');
-
+// Route::post('query', 'Api\ReactApiController@postQueries');
+// Route::get('query-list', 'Api\ReactApiController@getQuery');
 // Route::get('Category', 'Api\ReactApiController@getCategory');
-
+// Route::get('faq', 'Api\ReactApiController@getFaq');

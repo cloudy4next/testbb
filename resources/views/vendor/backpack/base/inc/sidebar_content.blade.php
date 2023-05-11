@@ -49,8 +49,8 @@
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('pptx') }}'><i class="las la-file-powerpoint"></i>
         E-Learning</a></li>
 
-<li class='nav-item'><a class='nav-link' href='{{ backpack_url('query') }}'><i class='nav-icon las la-comments'></i>
-        Queries</a></li>
+{{-- <li class='nav-item'><a class='nav-link' href='{{ backpack_url('query') }}'><i class='nav-icon las la-comments'></i>
+        Queries</a></li> --}}
 
 @if (backpack_user()->hasPermissionTo('Category'))
     <li class='nav-item'><a class='nav-link' href='{{ backpack_url('category') }}'><i class='nav-icon las la-tag'></i>
@@ -93,12 +93,12 @@
                         <span>Activity Log</span></a></li>
             @endif
 
-            <li class='nav-item'><a class='nav-link' href='{{ backpack_url('newsletter') }}'><i
+            {{-- <li class='nav-item'><a class='nav-link' href='{{ backpack_url('newsletter') }}'><i
                         class='nav-icon la la-question'></i> Newsletters</a></li>
 
             <li class='nav-item'><a class='nav-link' href='{{ backpack_url('faq') }}'><i
                         class='nav-icon la la-question'></i>
-                    Faqs</a></li>
+                    Faqs</a></li> --}}
 
         </ul>
     </li>
