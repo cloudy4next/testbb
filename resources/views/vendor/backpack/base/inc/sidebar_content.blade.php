@@ -3,10 +3,10 @@
         {{ trans('backpack::base.dashboard') }}</a></li>
 
 @if (backpack_user()->hasPermissionTo('Settings'))
-    <li class='nav-item'><a class='nav-link' href='{{ backpack_url('slider') }}'><i class='nav-icon la la-question'></i>
+    <li class='nav-item'><a class='nav-link' href='{{ backpack_url('slider') }}'><i class="nav-icon las la-sliders-h"></i>
             Sliders</a></li>
     <li class='nav-item'><a class='nav-link' href='{{ backpack_url('publishnews') }}'><i
-                class='nav-icon la la-question'></i>
+                class='nav-icon las la-scroll'></i>
             PublishNews</a></li>
 @endif
 
