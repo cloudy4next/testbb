@@ -22,7 +22,7 @@
 @endif
 
 @if (backpack_user()->hasPermissionTo('Article'))
-    <li class='nav-item'><a class='nav-link' href='{{ backpack_url('article') }}'><i class="las la-book"></i>
+    <li class='nav-item'><a class='nav-link' href='{{ backpack_url('article') }}'><i class="nav-icon las la-book"></i>
             Articles</a></li>
 @endif
 
@@ -41,7 +41,8 @@
 
 
 
-<li class='nav-item'><a class='nav-link' href='{{ backpack_url('research') }}'><i class="lab la-researchgate"></i>
+<li class='nav-item'><a class='nav-link' href='{{ backpack_url('research') }}'><i
+            class="nav-icon lab la-researchgate"></i>
         Research</a></li>
 
 
