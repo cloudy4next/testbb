@@ -12,6 +12,7 @@ use App\Notifications\NewUserRegisterNotification;
 use App\Models\Funded;
 use Carbon\Carbon;
 use File;
+use FFMpeg\FFProbe;
 use FFMpeg\FFMpeg;
 use FFMpeg\Format\Video\X264;
 use FFMpeg\Coordinate\Dimension;
@@ -93,7 +94,7 @@ class PPTXCrudController extends CrudController
         $image_filename = $this->storeService($request->image,'cover');
 
         $file = $request->file('pptx');
-        // dd($file);
+        dd($file);
         if ($file->getClientOriginalExtension() === 'mp4' || $file->getClientOriginalExtension() === 'avi' || $file->getClientOriginalExtension() === 'mov') {
 
             $pptx_filename = $this->optimize($file);

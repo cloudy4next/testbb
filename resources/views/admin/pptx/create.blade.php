@@ -81,7 +81,7 @@
                                 class="text-danger">*</span>
                             {!! Form::file('pptx', [
                                 'class' => 'form-control pptx',
-                                'id' => 'ptx',
+                                'id' => 'pptx',
                                 'rows' => '2',
                                 'placeholder' => 'Upload pptx',
                                 'tabindex' => 5,
