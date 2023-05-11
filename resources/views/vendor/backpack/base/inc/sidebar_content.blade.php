@@ -39,16 +39,15 @@
             Projects</a></li>
 @endif
 
+@if (backpack_user()->hasRole('Super admin'))
+    <li class='nav-item'><a class='nav-link' href='{{ backpack_url('research') }}'><i
+                class="nav-icon lab la-researchgate"></i>
+            Research</a></li>
 
-
-<li class='nav-item'><a class='nav-link' href='{{ backpack_url('research') }}'><i
-            class="nav-icon lab la-researchgate"></i>
-        Research</a></li>
-
-
-<li class='nav-item'><a class='nav-link' href='{{ backpack_url('pptx') }}'><i
-            class="nav-icon las la-file-powerpoint"></i>
-        E-Learning</a></li>
+    <li class='nav-item'><a class='nav-link' href='{{ backpack_url('pptx') }}'><i
+                class="nav-icon las la-file-powerpoint"></i>
+            E-Learning</a></li>
+@endif
 
 {{-- <li class='nav-item'><a class='nav-link' href='{{ backpack_url('query') }}'><i class='nav-icon las la-comments'></i>
         Queries</a></li> --}}
