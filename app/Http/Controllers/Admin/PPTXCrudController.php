@@ -95,14 +95,17 @@ class PPTXCrudController extends CrudController
 
         $file = $request->file('pptx');
         // dd($file);
-        if ($file->getClientOriginalExtension() === 'mp4' || $file->getClientOriginalExtension() === 'avi' || $file->getClientOriginalExtension() === 'mov') {
 
-            $pptx_filename = $this->optimize($file);
+        $pptx_filename = $this->storeService($request->pptx,'pptx');
 
-        } else {
+        // if ($file->getClientOriginalExtension() === 'mp4' || $file->getClientOriginalExtension() === 'avi' || $file->getClientOriginalExtension() === 'mov') {
 
-            $pptx_filename = $this->storeService($request->pptx,'pptx');
-        }
+        //     $pptx_filename = $this->optimize($file);
+
+        // } else {
+
+        //     $pptx_filename = $this->storeService($request->pptx,'pptx');
+        // }
 
 
 
