@@ -46,7 +46,8 @@
         Research</a></li>
 
 
-<li class='nav-item'><a class='nav-link' href='{{ backpack_url('pptx') }}'><i class="las la-file-powerpoint"></i>
+<li class='nav-item'><a class='nav-link' href='{{ backpack_url('pptx') }}'><i
+            class="nav-icon las la-file-powerpoint"></i>
         E-Learning</a></li>
 
 {{-- <li class='nav-item'><a class='nav-link' href='{{ backpack_url('query') }}'><i class='nav-icon las la-comments'></i>
