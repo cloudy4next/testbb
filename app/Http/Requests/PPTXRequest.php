@@ -28,7 +28,7 @@ class PPTXRequest extends FormRequest
         return [
             'name' => 'required|min:5',
             'image' => 'required|mimes:jpeg,jpg,png|max:5000',
-            'pptx' => 'required|mimes:jpeg,jpg,png,gif,mp4,mov,avi,mpeg,3gp,pdf,xlsx|max:500000',
+            'pptx' => 'required|mimes:jpeg,jpg,png,gif,mp4,mov,avi,mpeg,3gp,pdf,xlsx',
         ];
     }
 
