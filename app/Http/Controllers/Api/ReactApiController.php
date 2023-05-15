@@ -379,6 +379,7 @@ class ReactApiController extends Controller
 
         $change_name_to_title =[
             "id"=> $pptx->id,
+            'ext_type' => $pptx->ext,
             "count"=> $pptx-> count,
             "user_id"=> $pptx->user_id,
             "category_id"=> $pptx->category_id,
