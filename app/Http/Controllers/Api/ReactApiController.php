@@ -119,8 +119,10 @@ class ReactApiController extends Controller
 
         foreach($pptx as $pptx_data)
         {
+
             $pptx_array[] = [
                     'id' =>$pptx_data['id'],
+                    'ext_type' => $pptx_data['ext'],
                     'count' =>$pptx_data['count'],
                     'title' => $pptx_data['name'],
                     'image' =>'cover/'. $pptx_data['image'],
@@ -389,7 +391,6 @@ class ReactApiController extends Controller
         return response()->json(['success' => $change_name_to_title], 200);
 
     }
-
 
 
     public function getVideo(Request $request)

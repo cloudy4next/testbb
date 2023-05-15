@@ -94,7 +94,6 @@ class PPTXCrudController extends CrudController
         $image_filename = $this->storeService($request->image,'cover');
 
         $file = $request->file('pptx');
-        // dd($file);
 
         $pptx_filename = $this->storeService($request->pptx,'pptx');
 
@@ -116,7 +115,7 @@ class PPTXCrudController extends CrudController
         $pptx->created_at = Carbon::now();
         $pptx->image = $image_filename ?? NULL;
         $pptx->pptx = $pptx_filename ?? NULL;
-
+        $pptx->ext = $file->getClientOriginalExtension();
         $pptx->save();
 
         //Notification start
