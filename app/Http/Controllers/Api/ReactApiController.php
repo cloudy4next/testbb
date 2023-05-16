@@ -394,29 +394,56 @@ class ReactApiController extends Controller
     }
 
 
+//     public function getVideo(Request $request)
+//     {
+//         // dd($request->filename);
+//         $chunkSize = 1024 * 1024; // 1 MB
+
+//         $file = Storage::disk('uploads')->get('/pptx/pptx/' . $request->filename);
+//         // dd($file);
+//         $fileSize = strlen($file);
+
+
+//         Response::stream(function () use ($file, $chunkSize) {
+//             $pos = 0;
+//             $bytesSent = 0;
+//             while ($pos < strlen($file)) {
+//                 $chunk = substr($file, $pos, $chunkSize);
+//                 $chunkSizeSent = strlen($chunk);
+//                 echo dechex($chunkSizeSent) . "\r\n";
+//                 echo $chunk . "\r\n";
+//                 $pos += $chunkSizeSent;
+//                 $bytesSent += $chunkSizeSent;
+//             }
+//             echo "0\r\n\r\n";
+//         }, 200,)->send();
+//     }
+    
+    
+    
     public function getVideo(Request $request)
     {
-        // dd($request->filename);
-        $chunkSize = 1024 * 1024; // 1 MB
+        $path = Storage::disk('uploads')->get('/pptx/pptx/' . $request->filename);
+//         $path = storage_path('app/public/videos/' . $filename);
 
-        $file = Storage::disk('uploads')->get('/pptx/pptx/' . $request->filename);
-        // dd($file);
-        $fileSize = strlen($file);
+                if (!Storage::exists($path)) {
+                    abort(404, 'File not found');
+                }
 
+                $stream = Storage::readStream($path);
 
-        Response::stream(function () use ($file, $chunkSize) {
-            $pos = 0;
-            $bytesSent = 0;
-            while ($pos < strlen($file)) {
-                $chunk = substr($file, $pos, $chunkSize);
-                $chunkSizeSent = strlen($chunk);
-                echo dechex($chunkSizeSent) . "\r\n";
-                echo $chunk . "\r\n";
-                $pos += $chunkSizeSent;
-                $bytesSent += $chunkSizeSent;
+                return response()->stream(function () use ($stream) {
+                    while (!feof($stream)) {
+                        echo fread($stream, 4096);
+                        flush();
+                    }
+                    fclose($stream);
+                }, 200, [
+                    'Content-Type' => 'video/mp4',
+                    'Content-Length' => Storage::size($path),
+                    'Accept-Ranges' => 'bytes',
+                ]);
             }
-            echo "0\r\n\r\n";
-        }, 200,)->send();
     }
 
     public function getSearch(Request $request)
