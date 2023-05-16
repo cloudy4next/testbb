@@ -423,12 +423,12 @@ class ReactApiController extends Controller
     
     public function getVideo(Request $request)
     {
-//         $path = Storage::disk('uploads')->get('/pptx/pptx/' . $request->filename);
-        $path = storage_path('app/public/uploads/pptx/pptx/' .  $request->filename);
+        $path = Storage::disk('uploads')->get('/pptx/pptx/' . $request->filename);
+//         $path = storage_path('app/public/uploads/pptx/pptx/' .  $request->filename);
 
-                if (!Storage::exists($path)) {
-                    abort(404, 'File not found');
-                }
+//                 if (!Storage::exists($path)) {
+//                     abort(404, 'File not found');
+//                 }
 
                 $stream = Storage::readStream($path);
 
