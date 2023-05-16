@@ -387,11 +387,7 @@ class ReactApiController extends Controller
                 flush();
             }
             fclose($stream);
-        }, 200, [
-            'Content-Type' => 'video/mp4',
-            'Content-Length' => Storage::size($file),
-            'Accept-Ranges' => 'bytes',
-        ]);
+        }, 200)->send();
 
         // Response::stream(function () use ($file, $chunkSize) {
         //     $pos = 0;
