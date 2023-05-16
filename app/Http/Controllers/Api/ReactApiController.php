@@ -379,29 +379,20 @@ class ReactApiController extends Controller
         // dd($file);
         $fileSize = strlen($file);
 
-        $stream = Storage::readStream($file);
 
-        return response()->stream(function () use ($stream) {
-            while (!feof($stream)) {
-                echo fread($stream, 4096);
-                flush();
+        Response::stream(function () use ($file, $chunkSize) {
+            $pos = 0;
+            $bytesSent = 0;
+            while ($pos < strlen($file)) {
+                $chunk = substr($file, $pos, $chunkSize);
+                $chunkSizeSent = strlen($chunk);
+                echo dechex($chunkSizeSent) . "\r\n";
+                echo $chunk . "\r\n";
+                $pos += $chunkSizeSent;
+                $bytesSent += $chunkSizeSent;
             }
-            fclose($stream);
-        }, 200)->send();
-
-        // Response::stream(function () use ($file, $chunkSize) {
-        //     $pos = 0;
-        //     $bytesSent = 0;
-        //     while ($pos < strlen($file)) {
-        //         $chunk = substr($file, $pos, $chunkSize);
-        //         $chunkSizeSent = strlen($chunk);
-        //         echo dechex($chunkSizeSent) . "\r\n";
-        //         echo $chunk . "\r\n";
-        //         $pos += $chunkSizeSent;
-        //         $bytesSent += $chunkSizeSent;
-        //     }
-        //     echo "0\r\n\r\n";
-        // }, 200,)->send();
+            echo "0\r\n\r\n";
+        }, 200,)->send();
     }
 
 
