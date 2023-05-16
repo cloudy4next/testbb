@@ -444,7 +444,7 @@ class ReactApiController extends Controller
                     'Accept-Ranges' => 'bytes',
                 ]);
             }
-    }
+  
 
     public function getSearch(Request $request)
     {
