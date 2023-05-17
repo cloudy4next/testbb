@@ -372,27 +372,27 @@ class ReactApiController extends Controller
 
     public function getVideo(Request $request)
     {
-        // dd($request->filename);
-        $chunkSize = 1024 * 1024; // 1 MB
+        $videoPath = 'uploads/pptx/pptx/' . $request->filename;
 
-        $file = Storage::disk('uploads')->get('/pptx/pptx/' . $request->filename);
-        // dd($file);
-        $fileSize = strlen($file);
+        if (!file_exists($videoPath)) {
+            abort(404);
+        }
+        $headers = [
+            'Content-Type' => 'video/mp4',
+        ];
+        // Open the video file for reading
+        $stream = fopen($videoPath, 'rb');
 
+            // Send the video stream as the response
+            return Response::stream(function () use ($stream) {
+                // Read and output the video data in chunks
+                while (!feof($stream)) {
+                    echo fread($stream, 1024 * 1024); // Adjust the chunk size as per your needs
+                    flush();
+                }
 
-        Response::stream(function () use ($file, $chunkSize) {
-            $pos = 0;
-            $bytesSent = 0;
-            while ($pos < strlen($file)) {
-                $chunk = substr($file, $pos, $chunkSize);
-                $chunkSizeSent = strlen($chunk);
-                echo dechex($chunkSizeSent) . "\r\n";
-                echo $chunk . "\r\n";
-                $pos += $chunkSizeSent;
-                $bytesSent += $chunkSizeSent;
-            }
-            echo "0\r\n\r\n";
-        }, 200,)->send();
+                fclose($stream);
+            }, 200,$headers);
     }
 
 
